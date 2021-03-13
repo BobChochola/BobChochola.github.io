@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="這是一個關於畢業的時候的回憶，還記得那時候根本不知道自己要做什麼，所以什麼領域的工作的投投看，去面了各種各樣的工作，MA, FinTech, traders, Financial researcher, Risk management, pytheon data enginner, java enginner, IC designer …最後選擇一個環境很歡樂的公司大家都是像是很好的朋友一樣。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript-Array-Cardio-Day1-04">
+<meta property="og:url" content="http://example.com/2021/03/13/JavaScript-Array-Cardio-Day1-04/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="這是一個關於畢業的時候的回憶，還記得那時候根本不知道自己要做什麼，所以什麼領域的工作的投投看，去面了各種各樣的工作，MA, FinTech, traders, Financial researcher, Risk management, pytheon data enginner, java enginner, IC designer …最後選擇一個環境很歡樂的公司大家都是像是很好的朋友一樣。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-13T07:38:07.000Z">
+<meta property="article:modified_time" content="2021-03-13T07:46:29.712Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/13/JavaScript-Array-Cardio-Day1-04/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript-Array-Cardio-Day1-04 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/JavaScript-Array-Cardio-Day1-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript-Array-Cardio-Day1-04
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-03-13 15:38:07 / Modified: 15:46:29" itemprop="dateCreated datePublished" datetime="2021-03-13T15:38:07+08:00">2021-03-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>這是一個關於畢業的時候的回憶，<br>還記得那時候根本不知道自己要做什麼，所以什麼領域的工作的投投看，<br>去面了各種各樣的工作，MA, FinTech, traders, Financial researcher, Risk management, pytheon data enginner, java enginner, IC designer …<br>最後選擇一個環境很歡樂的公司大家都是像是很好的朋友一樣。</p>
+<blockquote>
+<p>一開始雖然自己的成長沒有很快，可能是因為在這裡沒有沒帶我又是一個什麼都不太懂的菜菜，<br>剛出社會覺得什麼事情都要好好把握，好好表現，不敢問一些問題不懂就先說大概懂，<br>也許就是因為這樣的個性，讓我係在可以成長得比別人快吧，</p>
+</blockquote>
+<p>反正不會什麼都不懂就去google, 然後練習codeing，<br>還記得那個時候我因為知道自己沒有什麼能力，所以每天下班回家都去練習寫leetcode，<br>什麼都不懂，也不知道要怎麼google，看不懂語法，看不懂函式，最慘的連題目都看不懂，<br>所以這次的題目讓我覺得很有感觸，<br>以前花了這麼多時間還是似懂非懂的東西，現在居然可以直接寫出來，<br><code>大家都做得到的事情，我們要做的比別人更好</code><br><code>覺得基本的函式已經得心應手了，就試試看ES6來寫寫看吧</code><br>有在看這篇的人，如果覺得自己不是寫程式的料，<br>請再堅持三個月，有一天你就會突然，真的是突然融會貫通了。<br>在你們要放棄的時候，請想想這裡還有一個一直不斷堅持，三點半的靈魂。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">未知的每一步，永遠不知道做了決定會不是錯的，儘管當下看上去是最順遂的路，</span><br><span class="line">但沒有人知道實際上會不會有陷阱，</span><br><span class="line">不知道勇敢提出意見會不會被覺得強出風頭；</span><br><span class="line">不知道勇敢開口約女生會不會被覺得，你想多了我才對你沒興趣。</span><br><span class="line">不知道真的約出來之後，只是個值得信賴的好朋友，還是一個可靠的肩膀。</span><br><span class="line">總是有太多的不確定，沒有人知道這些不知道會導致什麼後果，所以遲遲不前選擇安穩。</span><br><span class="line">人生就是不斷的後悔，但有些事情如果你不去試試看，會連後悔的資格都沒有，</span><br><span class="line">最近開始想著完成去年剛接觸軟體時想著要完成一個可以賣錢的產品，</span><br><span class="line">儘管一切都想的很不全面，但原地踏步光是空想就是退步吧。</span><br><span class="line">那就開始執行吧，不管是夢想，還是那個心儀的人，</span><br><span class="line">跨出去就有機會，失敗了就再努力一次，</span><br><span class="line">當自己走向越來越好的獨一無二，就在給自己一次機會再放手去努力一次也無仿。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>希望現在的我在別人眼中，也許不是一個很棒的人，但一定是最努力的那一個。<br><a target="_blank" rel="noopener" href="https://github.com/BobChochola/javascript30/blob/master/04_Java_script_Array_Cardio_Day_1/BobChochola.html">[DEMO]</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/13/JavaScript-Playing-with-css-bariables-and-js-03/" rel="prev" title="JavaScript-Playing-with-css-bariables-and-js-03">
+      <i class="fa fa-chevron-left"></i> JavaScript-Playing-with-css-bariables-and-js-03
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/13/JavaScript-Flex-Panel-Gallery-05/" rel="next" title="JavaScript-Flex-Panel-Gallery-05">
+      JavaScript-Flex-Panel-Gallery-05 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

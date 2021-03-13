@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="其實這次的東西很早就寫好了，只是最近真的是瘋狂的加班唉呀呀所以都沒有時間來寫寫自己多心得，分享一下自己過得還好嗎每天都寫要做這件事，可是每天都覺得今天好累啊，撐不住了，想滑手機、想耍廢…  我覺得我們都常常陷入這種情境之中，明明心有餘而力不足，這種狀況很常發生在一件事堅持了一段時間，就會覺得自己做事情已經比以前快上了許多，應該可以偷懶一下了吧我就常常有這種心情出現，總覺得說唉我都這麼努力了，還想要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript-Playing-with-css-bariables-and-js-03">
+<meta property="og:url" content="http://example.com/2021/03/13/JavaScript-Playing-with-css-bariables-and-js-03/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="其實這次的東西很早就寫好了，只是最近真的是瘋狂的加班唉呀呀所以都沒有時間來寫寫自己多心得，分享一下自己過得還好嗎每天都寫要做這件事，可是每天都覺得今天好累啊，撐不住了，想滑手機、想耍廢…  我覺得我們都常常陷入這種情境之中，明明心有餘而力不足，這種狀況很常發生在一件事堅持了一段時間，就會覺得自己做事情已經比以前快上了許多，應該可以偷懶一下了吧我就常常有這種心情出現，總覺得說唉我都這麼努力了，還想要">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-13T07:36:24.000Z">
+<meta property="article:modified_time" content="2021-03-13T07:45:23.022Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/13/JavaScript-Playing-with-css-bariables-and-js-03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript-Playing-with-css-bariables-and-js-03 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/JavaScript-Playing-with-css-bariables-and-js-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript-Playing-with-css-bariables-and-js-03
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-03-13 15:36:24 / Modified: 15:45:23" itemprop="dateCreated datePublished" datetime="2021-03-13T15:36:24+08:00">2021-03-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>其實這次的東西很早就寫好了，只是最近真的是瘋狂的加班唉呀呀<br>所以都沒有時間來寫寫自己多心得，分享一下自己過得還好嗎<br>每天都寫要做這件事，可是每天都覺得今天好累啊，撐不住了，想滑手機、想耍廢…</p>
+<blockquote>
+<p>我覺得我們都常常陷入這種情境之中，明明心有餘而力不足，這種狀況很常發生在一件事堅持了一段時間，就會覺得自己做事情已經比以前快上了許多，應該可以偷懶一下了吧<br>我就常常有這種心情出現，總覺得說<br>唉我都這麼努力了，還想要我怎樣呢？ 休息一下應該還好吧<br>休息是為了走更長遠的了…     但實際上真的是嗎？</p>
+</blockquote>
+<p>休息不是永無止盡的放縱自己，而努力也不是埋首苦幹的往前衝<br>所以這次我給自己訂了一個時間，<br>從<code>開始製作</code>, <code>補上知識</code>, <code>嘗試不同的作法</code>, <code>寫好心得</code>, 都給自己一個時間<br>很意外的這次製作花了我很少的時間，<br>反而是補上知識的部分，花了我兩個晚上的時間，<br>雖然之前知道label這個東西，但不知道他其實有這麼多種呈現的方式，<br>所以就趁著自己<code>製作時間的上進步</code>, 讓自己更充實一點，<br>把每一種都試了一遍，順便去看看其他大神都會怎麼用，</p>
+<blockquote>
+<p>發狂接收訊息後，存在腦中的到底有多少呢？<br>其實大多數東西，沒有在用到應該就不會再記得他了，<br>國小跟你很要好的朋友名字，火山矽肺病的英文，曾經瘋狂出現在生命中的東西，有一天你也會慢慢淡忘他。<br>但是一但回一起，那熟悉感又會湧上的。<br>所以為了讓自己加深印象，所以花了特別多得時間來讓自己更融會貫通。<br>畢竟你不會忘記，8477294*174916592怎麼算吧，你只會覺得數學老師又再折磨人了，<br>但沒關係啊，現在有計算機，別人問你怎麼算出來的，可以跟他說讓他去算他一樣會覺得你很棒棒。<br>當我們懂的知道原理，使用起工具就會更加得心應手。</p>
+</blockquote>
+<p>什麼都準備好之後，一直在在想這次我學到了什麼，其實大概都已經想到了，</p>
+<blockquote>
+<p>一天拖著一天，想著隔天再來，啊今天好天氣去打打球好了，唉..今天天空不美麗放自己一個假，今天股市大跌要好好睡覺慰藉那些賠錢的人，今天旁邊的女同事說我很笨，今天主管又罵了我一頓，常常因為一些不知所云的理由，或是真的不開心的事情就想要讓自己放個假，讓自己放鬆快樂點，但實際上隔天早上起床，還是會有一堆鳥事成為你的藉口。</p>
+</blockquote>
+<p>給自己一個時間吧<br>如果你能在時間內又完成了，那我們是不是又比其他人更好了一些，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">曾經有一位大神同事跟我說過：</span><br><span class="line">你不進步你就等著被淘汰吧，</span><br><span class="line">但老一輩的人，怎麼好像都好好的過日子，</span><br><span class="line">一樣每天的例行公事，一樣對面一些鳥事，</span><br><span class="line">習慣成自然，也好好的到退休，</span><br><span class="line">但慢慢的想長大想著，</span><br><span class="line">其實他們都是群幸運的人吧。</span><br><span class="line">運氣不能掌握在自己手裡，</span><br><span class="line">但進步一定可以的吧，</span><br></pre></td></tr></table></figure>
+<p>覺得之前makrdown寫出來的樣式都很醜，push完之後又後悔，那為什麼不在一開始就幫自己先檢查檢查，<br>所以這次特別去看看別人都怎麼寫markdownk, markdown的一些小語法應該長什麼樣子，雖然還是很醜，<br>但我們都有在前進的。</p>
+<p><a target="_blank" rel="noopener" href="https://bobchochola.github.io/javascript30/03_Java_script_Playing_with_CSS_Variables_and_JS/index-BobChochola.html">[DEMO]</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/13/JavaScript-CSS-with-Js-Clock-02/" rel="prev" title="JavaScript-CSS-with-Js-Clock-02">
+      <i class="fa fa-chevron-left"></i> JavaScript-CSS-with-Js-Clock-02
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/13/JavaScript-Array-Cardio-Day1-04/" rel="next" title="JavaScript-Array-Cardio-Day1-04">
+      JavaScript-Array-Cardio-Day1-04 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
