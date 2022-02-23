@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="Jj5k5zPnNaVV7LYlvIqUex4OlNQ-gyqpbb_MkVbz_Wo" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="趁著這個週末，回去大學母校，看著當時的隊友一個一個研究所即將畢業，大家後來都繼續往數學發展，但卻都面臨了一樣的困擾，  是不是要認自己的程式能力進步；真的喜歡寫程式嗎。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-Slide-in-on-Scroll-13">
+<meta property="og:url" content="http://example.com/2021/03/23/JavaScript30-Slide-in-on-Scroll-13/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="趁著這個週末，回去大學母校，看著當時的隊友一個一個研究所即將畢業，大家後來都繼續往數學發展，但卻都面臨了一樣的困擾，  是不是要認自己的程式能力進步；真的喜歡寫程式嗎。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-23T10:41:15.000Z">
+<meta property="article:modified_time" content="2022-02-23T03:58:22.862Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/23/JavaScript30-Slide-in-on-Scroll-13/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript30-Slide-in-on-Scroll-13 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/JavaScript30-Slide-in-on-Scroll-13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript30-Slide-in-on-Scroll-13
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-23 18:41:15" itemprop="dateCreated datePublished" datetime="2021-03-23T18:41:15+08:00">2021-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-23 11:58:22" itemprop="dateModified" datetime="2022-02-23T11:58:22+08:00">2022-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>趁著這個週末，回去大學母校，<br>看著當時的隊友一個一個研究所即將畢業，<br>大家後來都繼續往數學發展，<br>但卻都面臨了一樣的困擾，</p>
+<blockquote>
+<p>是不是要認自己的程式能力進步；真的喜歡寫程式嗎。</p>
+</blockquote>
+<span id="more"></span>
+<p>寫程式這件事情，好像真的像當時我剛踏入的這個領域時<br>前輩對我說的一樣：<br>你必須對他很有愛，一直追求自己追求新的技術，追求那些新知識。</p>
+<p>一開始想說，是在公啥小，寫程式就寫程式，反正你一直寫到最後就會變反射動作，<br>看到需求東西就生出來。</p>
+<p>但現實真的跟前輩們說的一樣，<br>不追求知識的人，到最後就是被淘汰，<br>當停滯不前時，有人慢慢的向前走就是落後了。</p>
+<p>每想到這次看到大家我也說出一樣的話，<br>真的很有愛再來踏入這個領域，<br>當你不追求的時候，<br>就會失去報章雜誌給這個領域的光環，<br>就只是一個沒有創造力的工人，<br>隨著時間，跟上被淘汰的洪流之中，<br><code>希望</code> 兩年後的我回來看會覺得自己得堅持很直得。</p>
+<p>跟著大家說著職場的生活，<br>覺得跟去年的自己又更不一樣了<br>一年一年我相信自己是可以的。</p>
+<blockquote>
+<p>跟著青春們從籃球聊到職場，聊到未來，再回到籃球。<br>青春，謝謝你們，讓我們一起加油。</p>
+</blockquote>
+<h1 id="13-Slide-in-on-Scroll"><a href="#13-Slide-in-on-Scroll" class="headerlink" title="13 - Slide in on Scroll"></a>13 - Slide in on Scroll</h1><blockquote>
+<p>首次上傳：2020/10/25</p>
+</blockquote>
+<h2 id="主題"><a href="#主題" class="headerlink" title="主題"></a><strong>主題</strong></h2><p>這篇介紹當滾動視窗到定點時動畫滑入圖片的效果，<br>而我在這裡替圖片增加了簡易的lazy load效果。</p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a><strong>步驟</strong></h2><h3 id="Step1-基礎設定"><a href="#Step1-基礎設定" class="headerlink" title="Step1. 基礎設定"></a>Step1. 基礎設定</h3><p>作者已經在所有的圖片中加入了待會會用到的class : </p>
+<ol>
+<li>align-right / align-left : 滑入效果用（左/右）</li>
+<li>slide-in : JavaScript抓取用<br>並已經將相關的動畫滑入效果寫好。</li>
+</ol>
+<h3 id="Step2-建立觸發條件-並監聽滾動事件"><a href="#Step2-建立觸發條件-並監聽滾動事件" class="headerlink" title="Step2. 建立觸發條件,並監聽滾動事件"></a>Step2. 建立觸發條件,並監聽滾動事件</h3><p>目的是使滾動視窗到定點時顯示效果，<br>所以要監聽的是整個視窗，用<code>window</code>，事件選用<code>scroll</code>，<br>但是如果單純使用<code>scroll</code>來操作的話，每次的畫面滾動都會有大量事件被觸發，<br>會對效能上造成影響，所以作者多寫了一個<code>debounce</code>來使觸發間隔為20毫秒以上：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">func, wait = <span class="number">20</span>, immediate = <span class="literal">true</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> timeout;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="built_in">this</span>, args = <span class="built_in">arguments</span>;</span><br><span class="line">    <span class="keyword">var</span> later = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        timeout = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (!immediate) func.apply(context, args);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> callNow = immediate &amp;&amp; !timeout;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(later, wait);</span><br><span class="line">    <span class="keyword">if</span> (callNow) func.apply(context, args);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以監聽事件就會寫成<code>window.addEventListener(&#39;scroll&#39;, debounce(checkSlide));</code>。  </p>
+<h3 id="Step3-設定觸發後的事件內容"><a href="#Step3-設定觸發後的事件內容" class="headerlink" title="Step3. 設定觸發後的事件內容"></a>Step3. 設定觸發後的事件內容</h3><p>在一開始先取得所有<code>.slide-in</code>的圖片元素，使用<code>querySelectorAll</code>，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sliderImages = <span class="built_in">document</span>.querySelectorAll(<span class="string">&#x27;.slide-in&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>接著編寫每次<code>scroll</code>處發的<code>checkSlide</code> function:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkSlide</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    sliderImages.forEach(<span class="function"><span class="params">sliderImage</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 取得圖片1/2高度的定位點（卷軸垂直位移量＋視窗高度）- 1/2圖片高度</span></span><br><span class="line">        <span class="keyword">const</span> slideInAt = (<span class="built_in">window</span>.scrollY + <span class="built_in">window</span>.innerHeight) - (sliderImage.height / <span class="number">2</span>);</span><br><span class="line">        <span class="comment">// 取得圖片底部定位點（利用圖片頂部定位點+圖片高度取得）</span></span><br><span class="line">        <span class="keyword">const</span> imageBottom = sliderImage.offsetTop + sliderImage.height;</span><br><span class="line">        <span class="comment">// 判斷視窗是否已經超過圖片高度一半</span></span><br><span class="line">        <span class="keyword">const</span> isHalfShown = slideInAt &gt; sliderImage.offsetTop;</span><br><span class="line">        <span class="comment">// 判斷滾動範圍是否已經超過圖片底部（卷軸垂直位移量）</span></span><br><span class="line">        <span class="keyword">const</span> isNotScrolledPast = <span class="built_in">window</span>.scrollY &lt; imageBottom;</span><br><span class="line">        <span class="comment">// 判斷是否超過圖片一半高，且視窗尚未超過圖片底部來增加或移除css效果</span></span><br><span class="line">        <span class="keyword">if</span> (isHalfShown &amp;&amp; isNotScrolledPast) &#123;</span><br><span class="line">          sliderImage.classList.add(<span class="string">&#x27;active&#x27;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          sliderImage.classList.remove(<span class="string">&#x27;active&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="探索"><a href="#探索" class="headerlink" title="探索"></a><strong>探索</strong></h2><p>學會了抓取視窗高度並當滾動至對應位置時載入/移除動畫效果，<br>就想來試試看增加一個功能，當到對應位置時，才去做圖片的載入及動畫效果，<br>就是<code>lazyload</code>的很簡易版應用，套用在這個練習上。</p>
+<p>首先先把每個圖片改為用<code>data-imglink</code>來放圖片連結，像是這樣</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">data-imglink</span>=<span class="string">&quot;http://unsplash.it/400/401&quot;</span> <span class="attr">class</span>=<span class="string">&quot;align-right slide-in&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接著來修改觸發的事件內容，因為原本的寫法只要重新讀到圖片1/2位置就會觸發，<br>我要做的只要第一次觸發效果就好，且是在讀取圖片頂端時觸發，<br>所以修改如下，新增的用備註註明：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkSlide</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    sliderImages.forEach(<span class="function"><span class="params">sliderImage</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 取得圖片的定位點</span></span><br><span class="line">    <span class="keyword">const</span> slideInAt = (<span class="built_in">window</span>.scrollY + <span class="built_in">window</span>.innerHeight) - (sliderImage.height);</span><br><span class="line">    <span class="comment">// 判斷是否滾動到圖片的頂端</span></span><br><span class="line">    <span class="keyword">const</span> isImgTop = slideInAt &gt; sliderImage.offsetTop;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (isImgTop) &#123;</span><br><span class="line">        <span class="comment">// 透過dataset取得html裡面的data-imglink連結</span></span><br><span class="line">        <span class="keyword">const</span> imageLink = sliderImage.dataset.imglink;</span><br><span class="line">        <span class="comment">// 用setAttribute來設置取得的連結</span></span><br><span class="line">        sliderImage.setAttribute(<span class="string">&#x27;src&#x27;</span>, imageLink);</span><br><span class="line">        <span class="comment">// 增加一個事件，當圖片載入完成後套用css的動畫效果</span></span><br><span class="line">        sliderImage.addEventListener(<span class="string">&#x27;load&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            sliderImage.classList.add(<span class="string">&#x27;active&#x27;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JavaScript語法備註"><a href="#JavaScript語法備註" class="headerlink" title="JavaScript語法備註"></a><strong>JavaScript語法備註</strong></h2><p><strong>Window.scrollY</strong><br>目前瀏覽器視窗已滾動的Y軸（垂直位置）</p>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY">MDN-Window.scrollY</a></p>
+</blockquote>
+<p><strong>Window.innerHeight</strong><br>目前瀏覽器視窗的高度</p>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight">MDN-Window.innerHeight</a></p>
+</blockquote>
+<p><strong>HTMLElement.offsetTop</strong><br>返回指定元素相對於有父元素<code>(offsetParent)</code>中的頂端位置，<br>以此練習來說，<code>sliderImage</code>的父元素就是<code>window</code>。</p>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight">MDN-Window.innerHeight</a></p>
+</blockquote>
+<p><strong>HTMLElement.dataset</strong><br>透過<code>dataset</code>可以取回在HTML中設置的<code>data-*</code>內容，<br>注意使用<code>dataset</code>時property不用再將加上<code>data-</code>開頭，例如：    </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;test&quot;</span> <span class="attr">data-greet</span>=<span class="string">&quot;hi&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">&#x27;.test&#x27;</span>).dataset.greet; <span class="comment">// hi</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dataset">MDN-HTMLElement.dataset</a></p>
+</blockquote>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a><strong>Q&amp;A</strong></h2><p><strong>what are Throttling and Debounce different</strong><br><code>Throttling</code>像是給固定時間去刷新事件，<br>例如每20ms都要強制去刷新事件，可以避免視覺上效能問題。<br>例如事件因為太快而不出現。<br><code>Debounce</code><br>想象一個進電梯的場景，你走進了電梯，門剛要關上，這時另一個人想要進來，於是電梯沒有移動樓層（處理函數），而是將門打開讓那個人進來。這時又有一個人要進來，就又會上演剛才那一幕。也就是說，電梯延遲了它的函數（移動樓層）執行，但是優化了資源。</p>
+<p>你可以看到連續快速事件是怎樣被一個單獨的 debounce 事件所替代的。但是如果事件觸發時間間隔較長，就不會發生 debounce。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/BobChochola/javascript30/13_Java_script_Slide_in_on_Scroll/index-BobChochola.html">[DEMO]</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-Key-Sequence-Detection-12/" rel="prev" title="JavaScript30-Key-Sequence-Detection-12">
+      <i class="fa fa-chevron-left"></i> JavaScript30-Key-Sequence-Detection-12
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-References-VS-Copying-14/" rel="next" title="JavaScript30-References-VS-Copying-14">
+      JavaScript30-References-VS-Copying-14 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#13-Slide-in-on-Scroll"><span class="nav-number">1.</span> <span class="nav-text">13 - Slide in on Scroll</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-%E5%9F%BA%E7%A4%8E%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">Step1. 基礎設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-%E5%BB%BA%E7%AB%8B%E8%A7%B8%E7%99%BC%E6%A2%9D%E4%BB%B6-%E4%B8%A6%E7%9B%A3%E8%81%BD%E6%BB%BE%E5%8B%95%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">Step2. 建立觸發條件,並監聽滾動事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step3-%E8%A8%AD%E5%AE%9A%E8%A7%B8%E7%99%BC%E5%BE%8C%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%85%A7%E5%AE%B9"><span class="nav-number">1.2.3.</span> <span class="nav-text">Step3. 設定觸發後的事件內容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2"><span class="nav-number">1.3.</span> <span class="nav-text">探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript%E8%AA%9E%E6%B3%95%E5%82%99%E8%A8%BB"><span class="nav-number">1.4.</span> <span class="nav-text">JavaScript語法備註</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">1.5.</span> <span class="nav-text">Q&amp;A</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

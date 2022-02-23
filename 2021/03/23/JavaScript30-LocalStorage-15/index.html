@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="Jj5k5zPnNaVV7LYlvIqUex4OlNQ-gyqpbb_MkVbz_Wo" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="喧鬧、狂歡、輕聲細語、回神早已散場，值得紀錄的一天。 嘿、聲音、呼吸、寧靜，忘了交談了什麼，但笑著入眠。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-LocalStorage-15">
+<meta property="og:url" content="http://example.com/2021/03/23/JavaScript30-LocalStorage-15/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="喧鬧、狂歡、輕聲細語、回神早已散場，值得紀錄的一天。 嘿、聲音、呼吸、寧靜，忘了交談了什麼，但笑著入眠。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-23T10:45:07.000Z">
+<meta property="article:modified_time" content="2022-02-23T03:58:22.861Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/23/JavaScript30-LocalStorage-15/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript30-LocalStorage-15 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/JavaScript30-LocalStorage-15/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript30-LocalStorage-15
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-23 18:45:07" itemprop="dateCreated datePublished" datetime="2021-03-23T18:45:07+08:00">2021-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-23 11:58:22" itemprop="dateModified" datetime="2022-02-23T11:58:22+08:00">2022-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>喧鬧、狂歡、輕聲細語、回神早已散場，值得紀錄的一天。</p>
+<p>嘿、聲音、呼吸、寧靜，忘了交談了什麼，但笑著入眠。<br> <span id="more"></span><br>似乎說了很多很多，但很朦朧。<br>呆滯地看著眼前，聽不見背景的喧嘩，深刻的只有氣味。</p>
+<p>嗨，安穩吧，我想是個安穩的感覺。</p>
+<p>從小就覺得不應該說太多，畢竟沈默是金，<br>多說多錯，講出來好像只會製造麻煩和困擾，<br>說者無心聽者有意，也許只有這種時候才能毫無保留。</p>
+<p>血液有什麼在竄，是酒精帶來的副作用，還是這聞起來令人安心的味道，使我變了樣。<br>說夢話般的放鬆，想說的全說了，一絲不掛吧，想想還真不可思議，<br>不經懷疑自己，是壓力太大了只想宣洩，<br>還是真的有種魔力，像梅杜莎的眼睛會使人石化；主角的笑容永遠燦爛有著不敗金身。</p>
+<p>夢醒了，反覆思考著夢裡別人是怎麼看我的，是玩世不恭呢？又或者是貼心的大男孩。<br>怎麼時間就過了，想著千萬種延續夢境的方法，<br>好想再去相同的夢境，好想輕靠在舒服的樹蔭，享受著陽光的溫暖徐徐的風，被呵護著，<br>也許這是我一直想要的，讓我安心地訴說著過去、現在、理想。</p>
+<p>很久沒有用腳感受這個社會，不知道是沈靜其中，還是什麼讓我無法思考。<br>停下來真好，走著走著像是自言自語，心都靜下來了，大約10分鐘的安心，熱血澎湃為藍色星期一換染上淡淡的粉紅。</p>
+<p>轉身，揮手，再見，要再見這個夢，好嗎？</p>
+<p>在寫這篇的時候，因為有同事要離職，所以莫名其妙地去參加一場活動。<br>沒想到還蠻有趣的，好久沒有被解放自己的酒精開關，<br>雖然一開始有點尷尬，但隨著音樂的頻率，好像也會慢慢牽引彼此達到相同的頻率。<br>一點進步都沒有，只要有酒精就會想睡覺，幸好自己沒有做出什麼丟臉的事情，<br>隨著參加活動的經驗累積，好像發現自己，只有茫茫的時候會把話匣子打開，<br>雖然隔天都會意識模糊，忘了為什麼說起；忘了怎麼結束；又怎麼轉場；怎麼遇見太陽；<br>那時候的我，應該是最真實最沒防備的。</p>
+<p>記錄一下這段時間剛好接了一個功能，但由於同事不被Engineer, PM, QA信任，<br>所以變成事情都交到我身上，在這種況狀下，工作時程的安排，與其他人的溝通，<br>似乎上次的沈澱慢慢讓自己的成長浮出水面了，<br>原來在大家眼中我是這麼值得信賴的人，<br>說來挺開心的，但相對的就更少時間可以做下班學習這件事情了，<br>這篇文章對我來說很重要，有感覺是經常會需要的東西，每天都會用到的東西，<br>但知識實在太薄弱了，<br>只能先硬起來，等全部完成的時候再回來重看一遍好了。<br>加油吧，不論什麼事情，也不論是什麼人，遇到了就要去處理。<br>不做永遠不會解決事情，不努力也絕對不會被人喜歡，<br>是吧？ 希望我的努力，是能被看見的，讓我感覺到吧，如果你知道我在努力。</p>
+<h1 id="15-LocalStorage"><a href="#15-LocalStorage" class="headerlink" title="15 - LocalStorage"></a>15 - LocalStorage</h1><h2 id="主題"><a href="#主題" class="headerlink" title="主題"></a><strong>主題</strong></h2><p>這篇介紹LocalStorage的用法，<br>透過一個小菜單來透過localstorage做資料增刪功能。</p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a><strong>步驟</strong></h2><h3 id="Step1-基礎設定"><a href="#Step1-基礎設定" class="headerlink" title="Step1. 基礎設定"></a>Step1. 基礎設定</h3><p>作者已經設定好這篇練習用的html與css，<br>主要的架構由一個<code>div</code>包著<code>ul</code>與<code>from</code>，<br>類似Todo-List的清單(ul)與輸入欄位(form)。</p>
+<h3 id="Step2-撰寫輸入欄位新增功能"><a href="#Step2-撰寫輸入欄位新增功能" class="headerlink" title="Step2. 撰寫輸入欄位新增功能"></a>Step2. 撰寫輸入欄位新增功能</h3><p>首先取得<code>form</code>元素及<code>ul</code>，並宣告一個空陣列來存放新增資料。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> addItems = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.add-items&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> itemsList = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.plates&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> items = [];</span><br></pre></td></tr></table></figure>
+<p>接著撰寫一個<code>addItem</code>，參照備註:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addItem</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 加上preventDefault()避免每次submit都會重整網頁</span></span><br><span class="line">  e.preventDefault();</span><br><span class="line">  <span class="comment">// 利用再次querySelector來選取form中的input欄位值</span></span><br><span class="line">  <span class="keyword">const</span> text = <span class="built_in">this</span>.querySelector(<span class="string">&#x27;[name=item]&#x27;</span>).value;</span><br><span class="line">  <span class="comment">// 宣告新增要存入的物件，是輸入的文字與是否勾選的狀態(done)</span></span><br><span class="line">  <span class="keyword">const</span> item = &#123;</span><br><span class="line">    text,</span><br><span class="line">    done: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(item);</span><br><span class="line">  <span class="comment">// 清空輸入欄位</span></span><br><span class="line">  <span class="built_in">this</span>.reset();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 監聽submit按鈕</span></span><br><span class="line">addItems.addEventListener(<span class="string">&#x27;submit&#x27;</span>, addItem);</span><br></pre></td></tr></table></figure>
+<p>這樣每次submit後<code>items</code>就會新增在輸入欄位中的物件了！<br>可透過console.log來查看新增的物件狀態。</p>
+<h3 id="Step3-顯示新增的清單"><a href="#Step3-顯示新增的清單" class="headerlink" title="Step3. 顯示新增的清單"></a>Step3. 顯示新增的清單</h3><p>在上一個步驟中所做的只有存於宣告的陣列中，<br>並沒有抓出來顯示在HTML中，所以要寫一個function來顯示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES6可在function中的參數直接設定參數預設值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">populateList</span>(<span class="params">plates = [], platesList</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 使用map搭配join來組成字串，並顯示在html的清單ul中</span></span><br><span class="line">  platesList.innerHTML = plates.map(<span class="function">(<span class="params">plate, i</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`</span></span><br><span class="line"><span class="string">      &lt;li&gt;</span></span><br><span class="line"><span class="string">        &lt;input type=&quot;checkbox&quot; data-index=<span class="subst">$&#123;i&#125;</span> id=&quot;item<span class="subst">$&#123;i&#125;</span>&quot; <span class="subst">$&#123;plate.done ? <span class="string">&#x27;checked&#x27;</span> : <span class="string">&#x27;&#x27;</span>&#125;</span>/&gt;</span></span><br><span class="line"><span class="string">        &lt;label for=&quot;item<span class="subst">$&#123;i&#125;</span>&quot;&gt;<span class="subst">$&#123;plate.text&#125;</span>&lt;/label&gt;</span></span><br><span class="line"><span class="string">      &lt;/li&gt;</span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line">  &#125;).join(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然後要記得回到<code>addItem</code>中把<code>platesList</code>放在<code>items.push(item)</code>後面，<br>讓每次輸入送出後都會執行這個function重新列出組成的物件字串。</p>
+<h3 id="Step4-加入LocalStorage"><a href="#Step4-加入LocalStorage" class="headerlink" title="Step4. 加入LocalStorage"></a>Step4. 加入LocalStorage</h3><p>當完成了新增功能後，就要進入主軸<code>LocalStorage</code>了，<br>這可以讓瀏覽器存取你設定在這個頁面的資訊，<br>所以首先在<code>addItem</code>中修改加入這段：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addItem</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line"><span class="comment">//...略</span></span><br><span class="line">    populateList(items, itemsList);</span><br><span class="line">    <span class="built_in">localStorage</span>.setItem(<span class="string">&#x27;items&#x27;</span>, <span class="built_in">JSON</span>.stringify(items));</span><br><span class="line">    <span class="built_in">this</span>.reset();</span><br><span class="line"><span class="comment">//...略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡將items的資訊存在localStorage中一個叫做<code>items</code>的自訂物件中，<br>注意的是存入的物件或陣列必須透過<code>JSON.stringify</code>轉為字串，<br>因為localStorage中的值是string，否則直接存只會得到”object object”的字串。</p>
+<p>接著修改最一開始宣告的<code>items</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> items = <span class="built_in">JSON</span>.parse(<span class="built_in">localStorage</span>.getItem(<span class="string">&#x27;items&#x27;</span>)) || [];</span><br></pre></td></tr></table></figure>
+<p>讓頁面在重整後，先判斷localStorage中是否有存放<code>items</code>物件，沒有的話則給空陣列。</p>
+<h3 id="Step5-儲存checkbox狀態"><a href="#Step5-儲存checkbox狀態" class="headerlink" title="Step5. 儲存checkbox狀態"></a>Step5. 儲存checkbox狀態</h3><p>這裡要新增一個function<code>toggleDone</code>並監聽<code>itemsList</code>的click動作，  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleDone</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 偵測進來的點擊是input(checkbox)才動作</span></span><br><span class="line">  <span class="keyword">if</span> (!e.target.matches(<span class="string">&#x27;input&#x27;</span>)) <span class="keyword">return</span>;</span><br><span class="line">  <span class="comment">// 取得checkbox的data-index值</span></span><br><span class="line">  <span class="keyword">const</span> el = e.target;</span><br><span class="line">  <span class="keyword">const</span> index = el.dataset.index;</span><br><span class="line">  <span class="comment">// 利用！來使done的狀態在true/false間切換</span></span><br><span class="line">  items[index].done = !items[index].done;</span><br><span class="line">  <span class="comment">// 將更新後的狀態寫入localStorage中</span></span><br><span class="line">  <span class="built_in">localStorage</span>.setItem(<span class="string">&#x27;items&#x27;</span>, <span class="built_in">JSON</span>.stringify(items));</span><br><span class="line">  <span class="comment">// 更新列表</span></span><br><span class="line">  populateList(items, itemsList);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 監聽click</span></span><br><span class="line">itemsList.addEventListener(<span class="string">&#x27;click&#x27;</span>, toggleDone);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step6-增加刪除功能"><a href="#Step6-增加刪除功能" class="headerlink" title="Step6. 增加刪除功能"></a>Step6. 增加刪除功能</h3><p>到目前為止只有新增跟儲存的功能，來增加一個刪除按鈕吧，<br>首先在<code>populateList</code>中字串組成中改成這樣：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">`</span></span><br><span class="line"><span class="string">  &lt;li&gt;</span></span><br><span class="line"><span class="string">    &lt;input type=&quot;checkbox&quot; data-index=<span class="subst">$&#123;i&#125;</span> id=&quot;item<span class="subst">$&#123;i&#125;</span>&quot; <span class="subst">$&#123;plate.done ? <span class="string">&#x27;checked&#x27;</span> : <span class="string">&#x27;&#x27;</span>&#125;</span>/&gt;</span></span><br><span class="line"><span class="string">    &lt;label for=&quot;item<span class="subst">$&#123;i&#125;</span>&quot;&gt;<span class="subst">$&#123;plate.text&#125;</span>&lt;/label&gt;</span></span><br><span class="line"><span class="string">    &lt;span data-index=<span class="subst">$&#123;i&#125;</span>&gt;delete&lt;span&gt; </span></span><br><span class="line"><span class="string">  &lt;/li&gt;</span></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p>這會使每次輸出時多一個delete的文字在後方，<br>然後調整<code>toggleDone</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleDone</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 初始化一個存檔狀態</span></span><br><span class="line">  <span class="keyword">let</span> save = <span class="literal">false</span>;</span><br><span class="line">  <span class="comment">// 取得觸發元素的data-index值</span></span><br><span class="line">  <span class="keyword">const</span> el = e.target;</span><br><span class="line">  <span class="keyword">const</span> index = el.dataset.index;</span><br><span class="line">  <span class="comment">// 判斷觸發元素，如果是input則為checkbox的狀態切換</span></span><br><span class="line">  <span class="keyword">if</span>(e.target.matches(<span class="string">&#x27;input&#x27;</span>))&#123;</span><br><span class="line">    items[index].done = !items[index].done;</span><br><span class="line">    save = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 如果是span則是透過splice刪除該物件</span></span><br><span class="line">  <span class="keyword">if</span>(e.target.matches(<span class="string">&#x27;span&#x27;</span>))&#123;</span><br><span class="line">    items.splice(index, <span class="number">1</span>);</span><br><span class="line">    save = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 判斷上方有做事才存擋</span></span><br><span class="line">  <span class="keyword">if</span>(save)&#123;</span><br><span class="line">    <span class="built_in">localStorage</span>.setItem(<span class="string">&#x27;items&#x27;</span>, <span class="built_in">JSON</span>.stringify(items));</span><br><span class="line">    populateList(items, itemsList);  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step7-新增全選-全取消功能"><a href="#Step7-新增全選-全取消功能" class="headerlink" title="Step7. 新增全選/全取消功能"></a>Step7. 新增全選/全取消功能</h3><p>在HTML的<code>form</code>元素後方加上這段HTML CODE:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">.checkMethod &#123;</span><br><span class="line"><span class="css">  <span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">  <span class="attribute">text-align</span>: left;</span></span><br><span class="line"><span class="css">  <span class="attribute">list-style</span>: none;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;checkMethod&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;checkAll&quot;</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>Check All<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使其有多一個checkbox來操作全選/全取消，<br>接著撰寫對應的功能：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取得操作元素</span></span><br><span class="line"><span class="keyword">const</span> checkAllBtn = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.checkAll&#x27;</span>);</span><br><span class="line"><span class="comment">// 全選/全取消</span></span><br><span class="line"><span class="keyword">const</span> checkAll = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 取得觸發當下全選按鈕是否已勾選</span></span><br><span class="line">  <span class="keyword">const</span> checkStatus = e.target.checked;</span><br><span class="line">  <span class="comment">// 透過迴圈將每個item的checkbox狀態改為與全選checobox狀態相同</span></span><br><span class="line">  items.forEach(<span class="function"><span class="params">index</span> =&gt;</span> &#123;</span><br><span class="line">    index.done = checkStatus;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 存檔</span></span><br><span class="line">  <span class="built_in">localStorage</span>.setItem(<span class="string">&#x27;items&#x27;</span>, <span class="built_in">JSON</span>.stringify(items));</span><br><span class="line">  <span class="comment">// 重整</span></span><br><span class="line">  populateList(items, itemsList);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 監聽操作元素動作</span></span><br><span class="line">checkAllBtn.addEventListener(<span class="string">&#x27;click&#x27;</span>, checkAll);</span><br></pre></td></tr></table></figure>
+
+<h2 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h2><p>本次探索就是<code>Step6的刪除</code>及<code>Step7的新增全選/全取消功能</code>功能擴充，<br>基本上所有語法都是之前有使用及寫下過的，<br>LocalStorage很實用，之前做的兩個小練習也都有使用上：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://demo.guastudio.com/jsTravelMap/">JavaScript練習-臺北市旅遊景點</a></li>
+<li><a target="_blank" rel="noopener" href="http://guahsu.io/Javascript-ETH-Listener/index.html">JavaScript-ETH-Linstener</a></li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>終於JS30系列完成一半了，當初的目標就是把這系列先練習完，</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/BobChochola/javascript30/15_Java_script__LocalStorage/index-BobChochola.html">[DEMO]</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-References-VS-Copying-14/" rel="prev" title="JavaScript30-References-VS-Copying-14">
+      <i class="fa fa-chevron-left"></i> JavaScript30-References-VS-Copying-14
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-Mouse-Move-Shadow-16/" rel="next" title="JavaScript30-Mouse-Move-Shadow-16">
+      JavaScript30-Mouse-Move-Shadow-16 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#15-LocalStorage"><span class="nav-number">1.</span> <span class="nav-text">15 - LocalStorage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-%E5%9F%BA%E7%A4%8E%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">Step1. 基礎設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-%E6%92%B0%E5%AF%AB%E8%BC%B8%E5%85%A5%E6%AC%84%E4%BD%8D%E6%96%B0%E5%A2%9E%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.2.</span> <span class="nav-text">Step2. 撰寫輸入欄位新增功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step3-%E9%A1%AF%E7%A4%BA%E6%96%B0%E5%A2%9E%E7%9A%84%E6%B8%85%E5%96%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">Step3. 顯示新增的清單</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step4-%E5%8A%A0%E5%85%A5LocalStorage"><span class="nav-number">1.2.4.</span> <span class="nav-text">Step4. 加入LocalStorage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step5-%E5%84%B2%E5%AD%98checkbox%E7%8B%80%E6%85%8B"><span class="nav-number">1.2.5.</span> <span class="nav-text">Step5. 儲存checkbox狀態</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step6-%E5%A2%9E%E5%8A%A0%E5%88%AA%E9%99%A4%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.6.</span> <span class="nav-text">Step6. 增加刪除功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step7-%E6%96%B0%E5%A2%9E%E5%85%A8%E9%81%B8-%E5%85%A8%E5%8F%96%E6%B6%88%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.7.</span> <span class="nav-text">Step7. 新增全選&#x2F;全取消功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2"><span class="nav-number">1.3.</span> <span class="nav-text">探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.4.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

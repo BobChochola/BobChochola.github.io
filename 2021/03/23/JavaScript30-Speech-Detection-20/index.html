@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="Jj5k5zPnNaVV7LYlvIqUex4OlNQ-gyqpbb_MkVbz_Wo" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="這次串接了google的語音辨識功能還在上面額外判斷說話的人是講中文還英文等有時間再去研究看看sourer code是譖麼做到的吧畢竟是一個喜歡自己造輪子的人～～ 不知不覺今年也又要過完了 仔細回想了一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-Speech-Detection-20">
+<meta property="og:url" content="http://example.com/2021/03/23/JavaScript30-Speech-Detection-20/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="這次串接了google的語音辨識功能還在上面額外判斷說話的人是講中文還英文等有時間再去研究看看sourer code是譖麼做到的吧畢竟是一個喜歡自己造輪子的人～～ 不知不覺今年也又要過完了 仔細回想了一下">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-23T10:53:50.000Z">
+<meta property="article:modified_time" content="2022-02-23T03:58:22.862Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/23/JavaScript30-Speech-Detection-20/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript30-Speech-Detection-20 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/JavaScript30-Speech-Detection-20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript30-Speech-Detection-20
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-23 18:53:50" itemprop="dateCreated datePublished" datetime="2021-03-23T18:53:50+08:00">2021-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-23 11:58:22" itemprop="dateModified" datetime="2022-02-23T11:58:22+08:00">2022-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>這次串接了google的語音辨識功能<br>還在上面額外判斷說話的人是講中文還英文<br>等有時間再去研究看看sourer code是譖麼做到的吧<br>畢竟是一個喜歡自己造輪子的人～～</p>
+<p>不知不覺今年也又要過完了</p>
+<p>仔細回想了一下</p>
+<span id="more"></span>
+<p>今年發生了什麼事情</p>
+<h2 id="1-第一次加入股市"><a href="#1-第一次加入股市" class="headerlink" title="1. 第一次加入股市"></a>1. 第一次加入股市</h2><p>(有起有落開始習慣每天都閱讀international news)</p>
+<h2 id="2-第一次談到破百的offer"><a href="#2-第一次談到破百的offer" class="headerlink" title="2. 第一次談到破百的offer"></a>2. 第一次談到破百的offer</h2><p> (今年好像面了5間吧, 從最一開始去找前端的職缺被洗臉,到可以拿到前端的offer, soft testing 每次都可以破百)</p>
+<h2 id="3-存到人生第一桶金"><a href="#3-存到人生第一桶金" class="headerlink" title="3. 存到人生第一桶金"></a>3. 存到人生第一桶金</h2><p>(在去年剛要踏入社會的時候,原本預計要等到25歲的時候才可以達成自己的目標, 沒想到提前了一年, 真的有對自己對成功的定義一步一步的達成,<code>對成功的定義：比預期的計畫更快達成,不斷的讓自己持續的思考未來的計劃</code>, 雖然這個第一桶金幾乎都是從股市賺到的,實際上薪水也沒有變多多少QQ)</p>
+<h2 id="4-第一次帶家人出國"><a href="#4-第一次帶家人出國" class="headerlink" title="4. 第一次帶家人出國"></a>4. 第一次帶家人出國</h2><p>(雖然才去日本五天不過感覺已經過上很奢侈的生活了,幫我的錢包QQ,直接不見了120張小朋友,以前總是想著等出社會之後,絕對不能虧待自己的家人,畢竟我是她放棄自己的青春換來的,真的辛苦妳了,媽)</p>
+<h2 id="5-第一次出車禍"><a href="#5-第一次出車禍" class="headerlink" title="5. 第一次出車禍"></a>5. 第一次出車禍</h2><p>(這真的很倒霉, 不僅沒有拿到賠償, 還讓自己的身體壞掉, 運動表現回不到當初, 努力健身的身材也慢慢不見QQ, 不過好像真的遇到過一次才知道, 自己不是一個會隨意頭的人, 跌倒了再站起來就好, 被撞飛了就去醫院吧～～, 體驗復健的過程也是蠻不錯的)</p>
+<h2 id="5-在工作上加入scurm"><a href="#5-在工作上加入scurm" class="headerlink" title="5. 在工作上加入scurm"></a>5. 在工作上加入scurm</h2><p>(原本覺得自己已經是一個可以獨當一面的人了, 沒想到加入了scure後, 發現自己要學的東西還多著呢, 從自己估時,自己溝通, 自己切scope, 發現問題解決問題, 覺得自己不自己是一個工人了, 感受到時程的壓力, 可以想得更遠一點, 之後未來可能會遇到些問題, 就可以提前先解決, 而不是先求快未來的事情未來再說, 今年真的成長了很多)</p>
+<h2 id="6-開始學習前端技術-amp-開始寫日誌"><a href="#6-開始學習前端技術-amp-開始寫日誌" class="headerlink" title="6. 開始學習前端技術&amp;開始寫日誌"></a>6. 開始學習前端技術&amp;開始寫日誌</h2><p>(這應該是我今年覺得自己最不一樣的一面了, 以前除了籃球有堅持不放以外, 其他的事情好像都是三分鐘熱度, 真沒有想到自己可以堅持這麼久, 每天的半夜三點學習時間, 每次做出新東西的喜悅, 我想因為有把它寫下來, 所以未來回來看我會更刻苦銘心, 再繼續加油吧, 一年再一年)</p>
+<h2 id="7-學會放棄一段感情"><a href="#7-學會放棄一段感情" class="headerlink" title="7. 學會放棄一段感情"></a>7. 學會放棄一段感情</h2><p>(以前總想著在一起就是要不辜負別人, 可能因為我的家庭, 讓我很想珍惜每一個談過心的人, 但隨著今年的成長, 慢慢知道有些事情是勉強不來的, 不論是理念不合的同事, 態度不能的團隊, 還是真的不適合的感情, 常常在想沒有誰是不能相處的, 沒有誰是不能磨合的, 但這出社會後的這兩年我真的知道了, 能做的只有把自己做好, 適時的提醒拉人一把, 如果對方一心只想把你拉懸崖, 那就必須捨棄掉這份執著, 能做的只有把自己準備好, 用態度感染願意一起成長的人, 真的沒有辦法的事情, 就要學會放下包袱, 不然累的只有自己, 也會走得更慢)<br><code>畢竟每一個人要的都不一樣, 勉強來的事情也不是真的原本的她了</code></p>
+<h2 id="8-多愛自己一點"><a href="#8-多愛自己一點" class="headerlink" title="8. 多愛自己一點"></a>8. 多愛自己一點</h2><p>(以前總想著一直賺錢不捨得花, 不去參加聚會, 不想花大錢吃好一點的東西, 只願意對別人好一些, 但後來想想, 這樣我好像沒有得到太多的快樂, 還不如有效地控制自己的金錢, <code>讓自保持愉悅的心情才會有更高的效率, 讓自己變得更好</code>, 原本不敢主動去接觸女生, 怕覺得沒有要用心跟人相處好像不能當朋友, 但現在發現沒有試過不同的人, 怎麼知道自己真的想要的是什麼, 那些理想型, 其實都只是過去經驗的理想型, 但那個過去不知道是多久之前的經驗了, 其實現實沒有什麼理想的, 只有相處起來是不是真的很開心, 然後讓自己部會去計較是付出的多少是不是要回收多少的利益利益關係, 但還是想好好找一個固定的人, 專心的聽我說話, 讓我可以這輩子都對她敞開心房。)</p>
+<h2 id="9-果斷"><a href="#9-果斷" class="headerlink" title="9. 果斷"></a>9. 果斷</h2><p>(記得還在當兵的時候, 總是想了很多有的沒的優柔寡斷, 不知道怎樣的決定才是對的才是好的才是不後悔的, 隨著工作經驗, 隨著心境上的不同, 我發現不管想得再怎麼多, 都還是會後悔, 但讓自己不要後悔的辦法就是, 相信自己的想法, 畢竟那是自己深思熟慮後的答案, 那就只要接受失敗了就好了啊, <code>反正人生就是不段的後悔, 看看要選擇走下去還是停在原地, 都不會後悔的人, 應該是都沒有在成長的, 畢竟這樣代表跟當時的你, 思路完全一樣</code>, 在面對工作上的決策也是, 保持思考這樣就可以多想一點未來會遇到的問題提前避開, 現在回去看, 去年自己寫出來很感動的作品, 也會覺得我應該要把那時候的自己電爆。 其實很開心)<br>(<code>感情就像是寫考卷</code>: 大家擁有的時間就是這麼多, 有的人失戀之後會卡在解不出來的第一題, 就這樣一直卡著, 等到時間快到的時候, 才選擇放棄, 隨便的後面的答案猜完, 有的人會選擇先忽略她, 努力的往下一道題目去解, 等最後再回過頭來, 看看第一題是不是真的沒解了放棄他; 又或著邊寫邊想著他, 等到了最後一題確定自己的分數已經很滿意了選擇放棄他, 失戀就像一道解不開的題目, 邊走邊看, 才會讓自己繼續在有限的時間前進, 加油吧明年。)</p>
+<h2 id="10-總結"><a href="#10-總結" class="headerlink" title="10. 總結"></a>10. 總結</h2><p>(其實沒有認真思考過自己的一年, 不知道自己今年得到了這麼多不只是技術上的東西, 原來整個心態想法都不斷的在成長, 這大概是人生最認真檢視自己的一年吧, 我想之後的我, 應該還是會繼續這麼做, 讓自己過得更踏實了一點, 也感受到自己的這一年其實過得很充實, 並不是每天班下班, 半夜不睡覺的再努力, 吃飯喝飲料的虛度光陰, 真的成長了很多.)</p>
+<h2 id="明年"><a href="#明年" class="headerlink" title="明年"></a>明年</h2><p>希望可以再繼續努力, 雖然也不知道自己現在是不是真的要選擇離開, 但先把自己準備得更好待價而沽吧, 真的心動的事情, 是不會去計較後果是什麼的, 畢竟怎樣都會有更好的機會更好的選擇、更好的解法, 就做好自己就好了。</p>
+<p>期許自己的感情, 遇到喜歡的就放手去表現自己, 人生就是這樣錯過的就是錯過了, 不把握機會怎麼會有好結果勒, 希望我覺得懂我的那個人, 可以來看看我, 跟我打聲招呼。</p>
+<p>少一點得失心, 不要去計較自己做了多少努力, 換來的結果不是升遷或是加薪, 反正淺在的價值已經刻在我的身體裡了, 就只是遇到可能不懂你的主管, 跟其實在這家公司真的沒有這麼重要而已; 選擇一個喜歡我的人, 不然再怎麼努力都是徒勞無功, 想再多也沒有用, 放寬心, 試著多交一些朋友, 畢竟人是會成長的, 會錯過的就是會錯過, 有機會遇見的繞了一圈還是會回來。</p>
+<p>還有10天，好好的繼續衝刺吧，不知道未來會不會變成我真的想變成的那種人，但我知道我現在已經是我想變成的那種人了。</p>
+<h1 id="20-Speech-Detection"><a href="#20-Speech-Detection" class="headerlink" title="20 - Speech Detection"></a>20 - Speech Detection</h1><h2 id="主題"><a href="#主題" class="headerlink" title="主題"></a><strong>主題</strong></h2><p>利用<code>SpeechRecognition</code>來做語音識別，<br>並透過<code>interimResults</code>來輸出識別的結果。</p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a><strong>步驟</strong></h2><h3 id="Step1-啟動Local-Server"><a href="#Step1-啟動Local-Server" class="headerlink" title="Step1. 啟動Local Server"></a>Step1. 啟動Local Server</h3><p>這個練習需要使用到local server，<br>如果你已經有一個可在本機run起來的server可以直接使用，<br>或在這層資料夾底下運行<code>npm install</code>來安裝<code>browser-sync</code>，<br>安裝完成後可以透過指令<code>npm start</code>來啟動localserver(預設port3000)，  </p>
+<blockquote>
+<p>npm指令需要下載node.js來使用</p>
+</blockquote>
+<h3 id="Step2-將SpeechRecognition建立起來"><a href="#Step2-將SpeechRecognition建立起來" class="headerlink" title="Step2. 將SpeechRecognition建立起來"></a>Step2. 將SpeechRecognition建立起來</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 將全域環境中的SpeechRecognition指好(依據不同瀏覽器)</span></span><br><span class="line"><span class="built_in">window</span>.SpeechRecognition = <span class="built_in">window</span>.SpeechRecognition || <span class="built_in">window</span>.webkitSpeechRecognition;</span><br><span class="line"><span class="comment">// 建立一個變數recognition來放為語音識別功能</span></span><br><span class="line"><span class="keyword">const</span> recognition = <span class="keyword">new</span> SpeechRecognition();</span><br><span class="line"><span class="comment">// 讓語音識別回傳識別後的資訊（預設為false)</span></span><br><span class="line">recognition.interimResults = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/interimResults">MDN-SpeechRecognition.interimResults</a></p>
+<h3 id="Step3-把輸出區域準備好"><a href="#Step3-把輸出區域準備好" class="headerlink" title="Step3. 把輸出區域準備好"></a>Step3. 把輸出區域準備好</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立一個p元素在html設定好的文字區中</span></span><br><span class="line"><span class="keyword">let</span> p = <span class="built_in">document</span>.createElement(<span class="string">&#x27;p&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> words = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.words&#x27;</span>);</span><br><span class="line">words.appendChild(p);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step4-對識別系統做監聽"><a href="#Step4-對識別系統做監聽" class="headerlink" title="Step4. 對識別系統做監聽"></a>Step4. 對識別系統做監聽</h3><p>識別回傳的資料是<code>NodeList</code>，所以要用<code>map</code>操作得先轉<code>array</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 監聽識別回傳</span></span><br><span class="line">recognition.addEventListener(<span class="string">&#x27;result&#x27;</span>, <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 將回傳資料先轉為array來操作</span></span><br><span class="line">  <span class="keyword">const</span> transcript = <span class="built_in">Array</span>.from(e.results)</span><br><span class="line">    <span class="comment">// 透過map取得回傳陣列中的第0筆</span></span><br><span class="line">    .map(<span class="function"><span class="params">result</span> =&gt;</span> result[<span class="number">0</span>])</span><br><span class="line">    <span class="comment">// 在取得第0筆中的transcript</span></span><br><span class="line">    .map(<span class="function"><span class="params">result</span> =&gt;</span> result.transcript)</span><br><span class="line">    <span class="comment">// 用join把連結符號消掉</span></span><br><span class="line">    .join(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 把回傳內容塞到p元素中</span></span><br><span class="line">  p.textContent = transcript;</span><br><span class="line">  <span class="comment">// 如果回傳內容已經結束（一段話的結尾）在建立一個新的p元素來放下一段文字</span></span><br><span class="line">  <span class="keyword">if</span> (e.results[<span class="number">0</span>].isFinal) &#123;</span><br><span class="line">    p = <span class="built_in">document</span>.createElement(<span class="string">&#x27;p&#x27;</span>);</span><br><span class="line">    words.appendChild(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 監聽如果語音識別結束，則在開啟一次新的識別</span></span><br><span class="line">recognition.addEventListener(<span class="string">&#x27;end&#x27;</span>, recognition.start);</span><br><span class="line"><span class="comment">// 開始識別</span></span><br><span class="line">recognition.start();</span><br></pre></td></tr></table></figure>
+
+
+<p><a target="_blank" rel="noopener" href="https://github.com/BobChochola/javascript30/20_Speech_Detection/index-BobChochola.html">[DEMO]</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-Java-script-Webcam-Fun-19/" rel="prev" title="JavaScript30-Java-script-Webcam-Fun-19">
+      <i class="fa fa-chevron-left"></i> JavaScript30-Java-script-Webcam-Fun-19
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-Geolocation-21/" rel="next" title="JavaScript30-Geolocation-21">
+      JavaScript30-Geolocation-21 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%8A%A0%E5%85%A5%E8%82%A1%E5%B8%82"><span class="nav-number">1.</span> <span class="nav-text">1. 第一次加入股市</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AB%87%E5%88%B0%E7%A0%B4%E7%99%BE%E7%9A%84offer"><span class="nav-number">2.</span> <span class="nav-text">2. 第一次談到破百的offer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AD%98%E5%88%B0%E4%BA%BA%E7%94%9F%E7%AC%AC%E4%B8%80%E6%A1%B6%E9%87%91"><span class="nav-number">3.</span> <span class="nav-text">3. 存到人生第一桶金</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B8%B6%E5%AE%B6%E4%BA%BA%E5%87%BA%E5%9C%8B"><span class="nav-number">4.</span> <span class="nav-text">4. 第一次帶家人出國</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%87%BA%E8%BB%8A%E7%A6%8D"><span class="nav-number">5.</span> <span class="nav-text">5. 第一次出車禍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%9C%A8%E5%B7%A5%E4%BD%9C%E4%B8%8A%E5%8A%A0%E5%85%A5scurm"><span class="nav-number">6.</span> <span class="nav-text">5. 在工作上加入scurm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E9%96%8B%E5%A7%8B%E5%AD%B8%E7%BF%92%E5%89%8D%E7%AB%AF%E6%8A%80%E8%A1%93-amp-%E9%96%8B%E5%A7%8B%E5%AF%AB%E6%97%A5%E8%AA%8C"><span class="nav-number">7.</span> <span class="nav-text">6. 開始學習前端技術&amp;開始寫日誌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%AD%B8%E6%9C%83%E6%94%BE%E6%A3%84%E4%B8%80%E6%AE%B5%E6%84%9F%E6%83%85"><span class="nav-number">8.</span> <span class="nav-text">7. 學會放棄一段感情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%A4%9A%E6%84%9B%E8%87%AA%E5%B7%B1%E4%B8%80%E9%BB%9E"><span class="nav-number">9.</span> <span class="nav-text">8. 多愛自己一點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E6%9E%9C%E6%96%B7"><span class="nav-number">10.</span> <span class="nav-text">9. 果斷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E7%B8%BD%E7%B5%90"><span class="nav-number">11.</span> <span class="nav-text">10. 總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%8E%E5%B9%B4"><span class="nav-number">12.</span> <span class="nav-text">明年</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-Speech-Detection"><span class="nav-number"></span> <span class="nav-text">20 - Speech Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-%E5%95%9F%E5%8B%95Local-Server"><span class="nav-number">2.1.</span> <span class="nav-text">Step1. 啟動Local Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-%E5%B0%87SpeechRecognition%E5%BB%BA%E7%AB%8B%E8%B5%B7%E4%BE%86"><span class="nav-number">2.2.</span> <span class="nav-text">Step2. 將SpeechRecognition建立起來</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step3-%E6%8A%8A%E8%BC%B8%E5%87%BA%E5%8D%80%E5%9F%9F%E6%BA%96%E5%82%99%E5%A5%BD"><span class="nav-number">2.3.</span> <span class="nav-text">Step3. 把輸出區域準備好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step4-%E5%B0%8D%E8%AD%98%E5%88%A5%E7%B3%BB%E7%B5%B1%E5%81%9A%E7%9B%A3%E8%81%BD"><span class="nav-number">2.4.</span> <span class="nav-text">Step4. 對識別系統做監聽</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

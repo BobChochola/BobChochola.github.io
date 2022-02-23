@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="Jj5k5zPnNaVV7LYlvIqUex4OlNQ-gyqpbb_MkVbz_Wo" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="恭喜又長大了，長大是日期，還是心靈。好像經歷過什麼，就會想要有些改變，嘗試著用不同的方式與人相處交心，一眼瞬間，一抹笑，一個肩膀，一雙手，一個突如其來的擁抱，好久沒有去看球賽了，原本在出門前還想發現時動態說，會不會這一輩子都只有自己一個人在看比賽，但有些事情好像想著想著就會實現，所以想想還是享受過程就好。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-Mouse-Move-Shadow-16">
+<meta property="og:url" content="http://example.com/2021/03/23/JavaScript30-Mouse-Move-Shadow-16/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="恭喜又長大了，長大是日期，還是心靈。好像經歷過什麼，就會想要有些改變，嘗試著用不同的方式與人相處交心，一眼瞬間，一抹笑，一個肩膀，一雙手，一個突如其來的擁抱，好久沒有去看球賽了，原本在出門前還想發現時動態說，會不會這一輩子都只有自己一個人在看比賽，但有些事情好像想著想著就會實現，所以想想還是享受過程就好。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-23T10:46:26.000Z">
+<meta property="article:modified_time" content="2022-02-23T03:58:22.862Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/23/JavaScript30-Mouse-Move-Shadow-16/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript30-Mouse-Move-Shadow-16 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/JavaScript30-Mouse-Move-Shadow-16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript30-Mouse-Move-Shadow-16
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-23 18:46:26" itemprop="dateCreated datePublished" datetime="2021-03-23T18:46:26+08:00">2021-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-23 11:58:22" itemprop="dateModified" datetime="2022-02-23T11:58:22+08:00">2022-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>恭喜又長大了，長大是日期，還是心靈。<br>好像經歷過什麼，就會想要有些改變，嘗試著用不同的方式與人相處交心，<br>一眼瞬間，一抹笑，一個肩膀，一雙手，一個突如其來的擁抱，<br>好久沒有去看球賽了，原本在出門前還想發現時動態說，<br>會不會這一輩子都只有自己一個人在看比賽，<br>但有些事情好像想著想著就會實現，所以想想還是享受過程就好。</p>
+<span id="more"></span>
+<p>現場激昂，輝閃汗水，隨著攻防不斷成長；場邊的我，好像也在成長著，<br>想著怎麼改變自己，如果以前的話一直失敗，那一定是哪個環節出了問題，<br>那換個方式來看看這次結果會不會有不同的果實可以摘下呢？</p>
+<p>還真的不一樣了，<br>心急吃不了熱稀飯，揠苗助長也不是真的完美收成。<br>幸好是個明理的人，<br>幸好這次是帶著隱形眼鏡看到的，<br>我想應該是沒有看錯了，<br>畢竟看得更清楚了一點吧，<br>很感謝，幼苗並沒有想像的脆弱，<br>埋進土裡再細心呵護，應該還是會茁壯吧，<br>等著開花結果的那一天，<br>沒失敗過，也學學失敗要怎麼補救，<br>品嚐甜美的時候，更會痛哭流涕的，</p>
+<p>加油吧，小幼苗，希望我不會澆太多水，<br>希望不會因為在你成長的時候不斷的噓寒問暖，而厭煩的枯萎，<br>今天就是你的生日了，重生的日子，</p>
+<blockquote>
+<p>許我一個願：<br>說到我會好好接受你的細心照料，<br>說到過程艱辛，也會不畏風吹日曬，<br>說到儘管不如預期，也會愉悅的接受這些過程，<br>好嗎？ 生日快樂了。</p>
+</blockquote>
+<p>很抱歉，我的心急，但說再多抱歉也沒有什麼用，</p>
+<p>我會記得擁擠的城市，也有安靜的街燈，<br>街燈下，緊張的心情，<br>牆角裡，堅毅的宣言，<br>有些不知所啜的泛紅，<br>心動不會隨著年紀改變，心動不分新舊。<br>有的時候就是一個瞬間，就有著那一刻真美的感覺，<br>人來人往，應該也覺得逗趣的畫面，看起來不違和吧。</p>
+<p>張開眼睛其實有點清醒，不知道該說些什麼才能照料好這株以萌芽的嫩綠。</p>
+<p>這篇的內容相對簡單很多，<br>沒有什麼好多敘述的事情XDD，</p>
+<p>蠻開心自己當初有想要做這件事情，<br>紀錄自己的人生，紀錄自己不會的地方，<br>紀錄自己的成長，紀錄重要的日子，<br>寫著寫著多了一份動力，多了一件想完成的事情，<br>雖然好像有點像一見傾心，<br>但隨著成長，其實越知道自己想要的是怎樣的未來，<br>越知道需要的是怎麼樣的朋友，<br>更清楚，誰在我身邊我會是開心的吧。</p>
+<blockquote>
+<p>如果記憶是一個罐頭，我希望它永遠不會過期 - 重慶森林</p>
+</blockquote>
+<h1 id="16-Mouse-Move-Shadow"><a href="#16-Mouse-Move-Shadow" class="headerlink" title="16 - Mouse Move Shadow"></a>16 - Mouse Move Shadow</h1><blockquote>
+<p>首次上傳：2020/11/22</p>
+</blockquote>
+<h2 id="主題"><a href="#主題" class="headerlink" title="主題"></a><strong>主題</strong></h2><p>透過textShadow讓文字的陰影隨滑鼠位置偏移，<br>並稍微帶到ES6的解構賦值的用法。  </p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a><strong>步驟</strong></h2><h3 id="Step1-設定目標區域與基本偏移量"><a href="#Step1-設定目標區域與基本偏移量" class="headerlink" title="Step1. 設定目標區域與基本偏移量"></a>Step1. 設定目標區域與基本偏移量</h3><ol>
+<li>抓取HTML中的<code>hero</code>與<code>text</code>做為目標區域</li>
+<li>設定基本偏移基準<code>walk = 100</code></li>
+</ol>
+<h3 id="Step2-建立觸發條件與事件"><a href="#Step2-建立觸發條件與事件" class="headerlink" title="Step2. 建立觸發條件與事件"></a>Step2. 建立觸發條件與事件</h3><ol>
+<li>設定<code>hero.addEventListener(&#39;mousemove&#39;, shadow)</code></li>
+<li>觸發事件備註：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shadow</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 透過解構賦值取得並設定資訊</span></span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">offsetHeight</span>: height,</span><br><span class="line">          offsetWidth: width &#125; = hero;</span><br><span class="line">  <span class="keyword">let</span> &#123; <span class="attr">offsetX</span>: x,</span><br><span class="line">        offsetY: y  &#125; = e;</span><br><span class="line">  <span class="comment">// 如果在目標區域外，則在加上目標座標值</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">this</span> !== e.target) &#123;</span><br><span class="line">    x = x + e.target.offsetLeft;</span><br><span class="line">    y = y + e.target.offsetTop;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 四捨五入最終偏移值</span></span><br><span class="line">  <span class="keyword">const</span> xWalk = <span class="built_in">Math</span>.round((x / width * walk) - (walk/<span class="number">2</span>));</span><br><span class="line">  <span class="keyword">const</span> yWalk = <span class="built_in">Math</span>.round((y / height * walk) - (walk/<span class="number">2</span>));</span><br><span class="line">  <span class="built_in">console</span>.log(xWalk, yWalk);</span><br><span class="line">  <span class="comment">// 使用textShadow來設定文字陰影</span></span><br><span class="line">  text.style.textShadow = <span class="string">`</span></span><br><span class="line"><span class="string">    <span class="subst">$&#123;xWalk&#125;</span>px <span class="subst">$&#123;yWalk&#125;</span>px 0px rgba(0, 0, 0, 0.5),</span></span><br><span class="line"><span class="string">    <span class="subst">$&#123;xWalk * -<span class="number">1</span>&#125;</span>px <span class="subst">$&#123;yWalk&#125;</span>px 0px rgba(0, 0, 0, 0.5),</span></span><br><span class="line"><span class="string">    <span class="subst">$&#123;yWalk&#125;</span>px <span class="subst">$&#123;xWalk * -<span class="number">1</span>&#125;</span>px 0px rgba(0, 0, 0, 0.5),</span></span><br><span class="line"><span class="string">    <span class="subst">$&#123;yWalk * -<span class="number">1</span>&#125;</span>px <span class="subst">$&#123;xWalk&#125;</span>px 0px rgba(0, 0, 0, 0.5)</span></span><br><span class="line"><span class="string">    `</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Javascript語法-amp-備註"><a href="#Javascript語法-amp-備註" class="headerlink" title="Javascript語法&amp;備註"></a><strong>Javascript語法&amp;備註</strong></h2><p><strong>解構賦值(Destructuring assignment)</strong><br>透過解構賦值，可以把直接把物件/陣列中的值塞入變數中，<br>擷取一小段程式碼做說明：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面這段等同於 const height = hero.offsetHeight;</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">offsetHeight</span>: height &#125; = hero;</span><br><span class="line"><span class="comment">// 下面這段等同於 let x = e.offsetX;</span></span><br><span class="line"><span class="keyword">let</span> &#123; <span class="attr">offsetX</span>: x &#125; = e;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱:<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">MDN-Destructuring assignment</a><br>關於解構賦值對我來說目前還是需要很用力的去閱讀才能讀懂，<br>雖然可以簡寫並縮短不少程式碼，但使用上滿不直覺的，<br>所以我自己目前還是會用舊的賦值寫法多，努力中。</p>
+</blockquote>
+<p><strong>Math.round</strong><br>可以將內容的數值進行四捨五入的動作。</p>
+<blockquote>
+<p>參閱:<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round">MDN-Math.round()</a></p>
+</blockquote>
+<h2 id="CSS語法備註"><a href="#CSS語法備註" class="headerlink" title="CSS語法備註"></a><strong>CSS語法備註</strong></h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* offset-x | offset-y | blur-radius | color */</span></span><br><span class="line"><span class="attribute">text-shadow</span>: <span class="number">1px</span> <span class="number">1px</span> <span class="number">2px</span> black;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱:<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow">MDN-text-shadow</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/BobChochola/javascript30/16_Java_script_Mouse_Move_Shadow/index-BobChochola.html">[DEMO]</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-LocalStorage-15/" rel="prev" title="JavaScript30-LocalStorage-15">
+      <i class="fa fa-chevron-left"></i> JavaScript30-LocalStorage-15
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-Sort-Without-Articles-17/" rel="next" title="JavaScript30-Sort-Without-Articles-17">
+      JavaScript30-Sort-Without-Articles-17 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Mouse-Move-Shadow"><span class="nav-number">1.</span> <span class="nav-text">16 - Mouse Move Shadow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-%E8%A8%AD%E5%AE%9A%E7%9B%AE%E6%A8%99%E5%8D%80%E5%9F%9F%E8%88%87%E5%9F%BA%E6%9C%AC%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">Step1. 設定目標區域與基本偏移量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-%E5%BB%BA%E7%AB%8B%E8%A7%B8%E7%99%BC%E6%A2%9D%E4%BB%B6%E8%88%87%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">Step2. 建立觸發條件與事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Javascript%E8%AA%9E%E6%B3%95-amp-%E5%82%99%E8%A8%BB"><span class="nav-number">1.3.</span> <span class="nav-text">Javascript語法&amp;備註</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E8%AA%9E%E6%B3%95%E5%82%99%E8%A8%BB"><span class="nav-number">1.4.</span> <span class="nav-text">CSS語法備註</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

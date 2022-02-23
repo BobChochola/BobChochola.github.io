@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="Jj5k5zPnNaVV7LYlvIqUex4OlNQ-gyqpbb_MkVbz_Wo" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="這篇覺得超推薦的，對於需要copy object, 還有assign variable在memory的位子可以有很明確的瞭解。 雖然早就看完了這篇，但一直遲遲沒有更新心得文，因為在工作上發生了點不愉快，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-References-VS-Copying-14">
+<meta property="og:url" content="http://example.com/2021/03/23/JavaScript30-References-VS-Copying-14/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="這篇覺得超推薦的，對於需要copy object, 還有assign variable在memory的位子可以有很明確的瞭解。 雖然早就看完了這篇，但一直遲遲沒有更新心得文，因為在工作上發生了點不愉快，">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-23T10:43:22.000Z">
+<meta property="article:modified_time" content="2022-02-23T03:58:22.862Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/23/JavaScript30-References-VS-Copying-14/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript30-References-VS-Copying-14 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/JavaScript30-References-VS-Copying-14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript30-References-VS-Copying-14
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-23 18:43:22" itemprop="dateCreated datePublished" datetime="2021-03-23T18:43:22+08:00">2021-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-23 11:58:22" itemprop="dateModified" datetime="2022-02-23T11:58:22+08:00">2022-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>這篇覺得超推薦的，對於需要copy object, 還有assign variable在memory的位子<br>可以有很明確的瞭解。</p>
+<p>雖然早就看完了這篇，但一直遲遲沒有更新心得文，<br>因為在工作上發生了點不愉快，</p>
+<span id="more"></span>
+<blockquote>
+<p>如個想要一個產品是好的，<br>那一定要有好的題材、材料、優秀的工人、檢測是否能更好的人，<br>檢測的人，似乎常常被懷疑是在雞蛋裡挑骨頭。<br>開始懷疑這份工作的價值，開始懷疑自己的價值。</p>
+</blockquote>
+<p>沈澱了這麼久，我想大家應該也都是想要好好的把事情做好，<br>想要把工作做到自己追求的完美，<br>在時程壓力下，難免會有點摩擦，<br>但如何平淡的處理，就要好好訓練一下自己說話的藝術了。</p>
+<p>也許是我自己表達的不夠清楚，造成大家覺得我在鬧事。<br>也許是彼此間互相傳遞訊息的時候出了短路，導致問題歸在我身上。<br>但經過這次，我想未來應該部會在發生一樣的事情了，<br>跌倒了！ 站起來就好了吧。<br>反正日子還是要過，不應該因為這件事情就放棄自己努力過的事情。</p>
+<p>雖然萌生了想要放棄軟體的想法，但就這樣放棄，<br>好像對明天的自己也不好交代，<br>明天的我也許會覺得放下了一塊大石頭；<br>一個月後的我，大概會慢慢開始懷念努力的自己；<br>五年後的我，應該會後悔怎麼沒有成為登峰造極；<br>就這樣簡單的說放棄。</p>
+<p><code>放棄很簡單，就像生命一樣</code><br><code>被逼上絕路就想自我了斷，但連放棄生命的勇氣都有了，堅持下去應該不會有多困難</code></p>
+<blockquote>
+<p>Sweet are the uses of adversity</p>
+</blockquote>
+<h1 id="14-JavaScript-References-VS-Copying"><a href="#14-JavaScript-References-VS-Copying" class="headerlink" title="14 - JavaScript References VS Copying"></a>14 - JavaScript References VS Copying</h1><blockquote>
+<p>首次上傳：2020/11/03</p>
+</blockquote>
+<h2 id="主題"><a href="#主題" class="headerlink" title="主題"></a><strong>主題</strong></h2><p>介紹JavaScript中陣列與物件的引用(refrence)及複製(Copying)。</p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a><strong>步驟</strong></h2><h3 id="Step1-原始型別"><a href="#Step1-原始型別" class="headerlink" title="Step1. 原始型別"></a>Step1. 原始型別</h3><p>JavaScript中的原始型別(Primitive Type)：  </p>
+<ol>
+<li>String</li>
+<li>Number</li>
+<li>Boolean</li>
+<li>Null</li>
+<li>Undefine</li>
+</ol>
+<h3 id="Step2-物件型別"><a href="#Step2-物件型別" class="headerlink" title="Step2. 物件型別"></a>Step2. 物件型別</h3><p>JavaScript中的物件型別(Object Type)：  </p>
+<ol>
+<li>使用者自訂的物件 - <code>var obj = &#123;&#125;</code></li>
+<li>內建的物件型別 - Array, Date, Math, RegExp ..<br>對，<code>Array</code>也是個物件。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JS的陣列中可以使用物件的字串用法</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr[<span class="number">0</span>]); <span class="comment">// &#x27;a&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(arr[<span class="string">&#x27;0&#x27;</span>]); <span class="comment">// &#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// JS的陣列也可以塞屬性</span></span><br><span class="line">arr.test = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="string">&#x27;Hi&#x27;</span>; &#125;;</span><br><span class="line">arr.test(); <span class="comment">// &#x27;Hi&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span>(arr); <span class="comment">// &#x27;object&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Step3-Call-by-value"><a href="#Step3-Call-by-value" class="headerlink" title="Step3. Call by value"></a>Step3. Call by value</h3><p>原始型別都是Call by value，當複製時不影響彼此，<br>如以下範例（上述個原始型別皆是）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line"><span class="built_in">console</span>.log(a, b); <span class="comment">// a a</span></span><br><span class="line">b = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a, b); <span class="comment">// a b</span></span><br></pre></td></tr></table></figure>
+<p>最初的<code>b = a</code>使<code>b</code>指向與<code>a</code>同一個記憶體位置(存放字串a)，<br>而當<code>b = &#39;b&#39;</code>時，b建立了一個記憶體位置存放字串b，並指向該位置。</p>
+<h3 id="Step4-Call-by-refrence"><a href="#Step4-Call-by-refrence" class="headerlink" title="Step4. Call by refrence"></a>Step4. Call by refrence</h3><p>當物件型別被複製使用時，是會被彼此改變的<br>如以下範例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Array</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = arr;</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;b&#x27;]</span></span><br><span class="line">arr2[<span class="number">1</span>] = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;c&#x27;] [&#x27;a&#x27;, &#x27;c&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Object</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = obj;</span><br><span class="line"><span class="built_in">console</span>.log(obj, obj2);<span class="comment">// &#123; a: 1, b: 2 &#125; &#123; a: 1, b: 2 &#125;</span></span><br><span class="line">obj2.b = <span class="number">3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj, obj2);<span class="comment">// &#123; a: 1, b: 3 &#125; &#123; a: 1, b: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+<p>以陣列為例，當最初的<code>arr2 = arr</code>時，<br><code>arr2</code>指向與<code>arr</code>同個記憶體位置(存放陣列[‘a’, ‘b’])，<br>但在<code>arr2[1] = &#39;c&#39;</code>時，<code>arr2</code>仍指著與<code>arr</code>同個位置，<br>所以當改變了索引[1]的值時，<code>arr</code>及<code>arr2</code>的索引[1]都被變更了。  </p>
+<h3 id="Step5-陣列的複製"><a href="#Step5-陣列的複製" class="headerlink" title="Step5. 陣列的複製"></a>Step5. 陣列的複製</h3><p>為了避免Call by refrence時會去異動到原本的陣列，<br>就要先把原本的陣列做一次複製，用剛才的範例來做，<br>有以下幾種方法：<br><strong>Array.prototype.Slice()</strong><br>如果直接使用<code>slice()</code>不指定起始與結束位置的話，<br>就等於直接複製整個整列：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = arr.slice();</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;b&#x27;]</span></span><br><span class="line">arr2[<span class="number">1</span>] = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;c&#x27;]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">MDN-Array.prototype.slice()</a></p>
+</blockquote>
+<p><strong>Array.prototype.concat()</strong><br>使用<code>concat()</code>可以合併陣列，所以如果使用空陣列來合併原陣列，<br>也會達到複製整個陣列的效果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [].concat(arr);</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;b&#x27;]</span></span><br><span class="line">arr2[<span class="number">1</span>] = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;c&#x27;]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat">MDN-Array.prototype.concat()</a></p>
+</blockquote>
+<p><strong>Spread syntax</strong><br>ES6的<code>Spread</code>語法，直接使用於複製方法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [...arr];</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;b&#x27;]</span></span><br><span class="line">arr2[<span class="number">1</span>] = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;c&#x27;]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator">MDN-Spread syntax</a></p>
+</blockquote>
+<p><strong>Array.from()</strong><br>同為ES6的<code>Array.from()</code>也可以快速達到複製的效果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = <span class="built_in">Array</span>.from(arr);</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;b&#x27;]</span></span><br><span class="line">arr2[<span class="number">1</span>] = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;c&#x27;]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from">MDN-Array.from()</a></p>
+</blockquote>
+<h3 id="Step6-物件的複製"><a href="#Step6-物件的複製" class="headerlink" title="Step6. 物件的複製"></a>Step6. 物件的複製</h3><p>同樣的，物件也會有call by refrence的特性，<br>所以與陣列相同，使用之前的範例來做物件的複製：</p>
+<p><strong>Object.assign()</strong><br>使用<code>Object.assign()</code>來做，指定一個空的物件並把目標對象塞進去就好了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = <span class="built_in">Object</span>.assign(&#123;&#125;, obj);</span><br><span class="line"><span class="built_in">console</span>.log(obj, obj2);<span class="comment">// &#123; a: 1, b: 2 &#125; &#123; a: 1, b: 2 &#125;</span></span><br><span class="line">obj2.b = <span class="number">3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj, obj2);<span class="comment">// &#123; a: 1, b: 3 &#125; &#123; a: 1, b: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">MDN-Object.assign()</a></p>
+</blockquote>
+<h3 id="Step7-JSON-parse-JSON-stringify"><a href="#Step7-JSON-parse-JSON-stringify" class="headerlink" title="Step7. JSON.parse * JSON.stringify"></a>Step7. JSON.parse * JSON.stringify</h3><p>利用<code>JSON.parse * JSON.stringify</code>來把目標對象作轉換賦值的動作，<br>不論目標對象是什麼型別，都可以用這招來做複製：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Array</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(arr));</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;b&#x27;]</span></span><br><span class="line">arr2[<span class="number">1</span>] = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr, arr2);<span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;] [&#x27;a&#x27;, &#x27;c&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Object</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj));</span><br><span class="line"><span class="built_in">console</span>.log(obj, obj2);<span class="comment">// &#123; a: 1, b: 2 &#125; &#123; a: 1, b: 2 &#125;</span></span><br><span class="line">obj2.b = <span class="number">3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj, obj2);<span class="comment">// &#123; a: 1, b: 3 &#125; &#123; a: 1, b: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/BobChochola/javascript30/14_Java_script_References_VS_Copying/index-BobChochola.html">[DEMO]</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-Slide-in-on-Scroll-13/" rel="prev" title="JavaScript30-Slide-in-on-Scroll-13">
+      <i class="fa fa-chevron-left"></i> JavaScript30-Slide-in-on-Scroll-13
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-LocalStorage-15/" rel="next" title="JavaScript30-LocalStorage-15">
+      JavaScript30-LocalStorage-15 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#14-JavaScript-References-VS-Copying"><span class="nav-number">1.</span> <span class="nav-text">14 - JavaScript References VS Copying</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-%E5%8E%9F%E5%A7%8B%E5%9E%8B%E5%88%A5"><span class="nav-number">1.2.1.</span> <span class="nav-text">Step1. 原始型別</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-%E7%89%A9%E4%BB%B6%E5%9E%8B%E5%88%A5"><span class="nav-number">1.2.2.</span> <span class="nav-text">Step2. 物件型別</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step3-Call-by-value"><span class="nav-number">1.2.3.</span> <span class="nav-text">Step3. Call by value</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step4-Call-by-refrence"><span class="nav-number">1.2.4.</span> <span class="nav-text">Step4. Call by refrence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step5-%E9%99%A3%E5%88%97%E7%9A%84%E8%A4%87%E8%A3%BD"><span class="nav-number">1.2.5.</span> <span class="nav-text">Step5. 陣列的複製</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step6-%E7%89%A9%E4%BB%B6%E7%9A%84%E8%A4%87%E8%A3%BD"><span class="nav-number">1.2.6.</span> <span class="nav-text">Step6. 物件的複製</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step7-JSON-parse-JSON-stringify"><span class="nav-number">1.2.7.</span> <span class="nav-text">Step7. JSON.parse * JSON.stringify</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

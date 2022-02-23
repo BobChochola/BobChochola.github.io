@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="Jj5k5zPnNaVV7LYlvIqUex4OlNQ-gyqpbb_MkVbz_Wo" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="好像每天都在想不同的議題為什麼跳槽總會給更多的薪水 如果在原公司加薪，好像沒有特別升等，都是跟大家加一樣的趴數。那如果這樣，能力的不同跟付出的不同，好像就顯得沒有這麼重要了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript30-Key-Sequence-Detection-12">
+<meta property="og:url" content="http://example.com/2021/03/23/JavaScript30-Key-Sequence-Detection-12/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="好像每天都在想不同的議題為什麼跳槽總會給更多的薪水 如果在原公司加薪，好像沒有特別升等，都是跟大家加一樣的趴數。那如果這樣，能力的不同跟付出的不同，好像就顯得沒有這麼重要了。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-23T10:39:25.000Z">
+<meta property="article:modified_time" content="2022-02-23T03:58:22.861Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/23/JavaScript30-Key-Sequence-Detection-12/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript30-Key-Sequence-Detection-12 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/JavaScript30-Key-Sequence-Detection-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript30-Key-Sequence-Detection-12
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-23 18:39:25" itemprop="dateCreated datePublished" datetime="2021-03-23T18:39:25+08:00">2021-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-23 11:58:22" itemprop="dateModified" datetime="2022-02-23T11:58:22+08:00">2022-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>好像每天都在想不同的議題<br>為什麼跳槽總會給更多的薪水</p>
+<p>如果在原公司加薪，好像沒有特別升等，都是跟大家加一樣的趴數。<br>那如果這樣，<br>能力的不同跟付出的不同，<br>好像就顯得沒有這麼重要了。</p>
+<span id="more"></span>
+<p>如果是這樣的狀況你們會怎麼做選擇呢？<br>離開自己很喜歡的公司很好的環境很好的同事，<br>加薪就是跟大家加一樣的比例，<br>但自己卻比同事花更多時間精進自己，<br>這樣的你們會選擇跳脫這個環境，<br>去追求更好的薪水嗎？<br>還是在工作上就不用這麼努力，繼續留在這裡呢？</p>
+<p>想了想我發現，<br>自己好像是，只要有事情就會想去把它做完，<br>有空閒的時間就會多幫別人做更多事情，<br>許多的前輩都建議我，<br>既然可以做得比別人快，<br>那就把時間多留給自己一點，<br>這樣下班之後你就不用這麼累的每天熬夜讓自己練功了，<br>但過了快兩年，我好像還是做不到調整自己的心態，<br>希望有一天主管可以知道我是很認真的，<br>我的產出是較高的，<br>至少讓這個體制看起來是平衡一點的，</p>
+<blockquote>
+<p>加油吧，每一天，貫徹自己的作法，待價而沽。</p>
+</blockquote>
+<h1 id="12-Key-Sequence-Detection"><a href="#12-Key-Sequence-Detection" class="headerlink" title="12 - Key Sequence Detection"></a>12 - Key Sequence Detection</h1><blockquote>
+<p>首次上傳：2020/10/21</p>
+</blockquote>
+<h2 id="主題"><a href="#主題" class="headerlink" title="主題"></a><strong>主題</strong></h2><p>記得以前玩遊戲常輸入的祕技嗎？上上下下左右左右BA之類的，<br>現在很多網站也有偷塞一些密碼，當你輸入完後會出現對應特效，<br>這篇就是介紹如何用JS來做這樣的小效果。</p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a><strong>步驟</strong></h2><h3 id="Step1-設定目標"><a href="#Step1-設定目標" class="headerlink" title="Step1. 設定目標"></a>Step1. 設定目標</h3><p>在這個效果中，目的是在瀏覽器內容中透過鍵盤觸發對應的“密碼”後執行，<br>所以需要設定一個陣列來保存輸入值，並設定好設定的密碼(我設定為guahsu)，<br>接著針對<code>window</code>對這個瀏覽器視窗來做<code>addEventListener(&#39;keyup&#39;..)</code>監聽鍵盤動作。</p>
+<h3 id="Step2-執行"><a href="#Step2-執行" class="headerlink" title="Step2. 執行"></a>Step2. 執行</h3><p>當觸發<code>keyup</code>時利用陣列的<code>push()</code>來塞入鍵盤動作所觸發的輸入內容<code>e.key</code>，<br>接著用陣列的<code>splice()</code>來控制密碼陣列，使其不超出密碼長度且堆疊替換掉第一個元素，<br>最後透過陣列的<code>join()</code>及字串的<code>includes()</code>來驗證輸入內容是否與設定密碼相同。  </p>
+<h3 id="程式備註"><a href="#程式備註" class="headerlink" title="程式備註"></a>程式備註</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pressed = []; <span class="comment">//保存輸入值用的陣列</span></span><br><span class="line"><span class="keyword">const</span> secretCode = <span class="string">&#x27;guahsu&#x27;</span>; <span class="comment">//設定的密碼</span></span><br><span class="line"><span class="comment">//監聽整個瀏覽器視窗的鍵盤動作</span></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;keyup&#x27;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//push觸發的鍵盤輸入值到陣列中</span></span><br><span class="line">  pressed.push(e.key);</span><br><span class="line">  <span class="comment">//透過運算使pressed陣列長度始終與設定密碼相同，且當超出時替換掉陣列第一個元素</span></span><br><span class="line">  pressed.splice(-secretCode.length - <span class="number">1</span>, pressed.length - secretCode.length);</span><br><span class="line">  <span class="comment">//判斷輸入值陣列的內容是否與設定密碼相同</span></span><br><span class="line">  <span class="keyword">if</span> (pressed.join(<span class="string">&#x27;&#x27;</span>).includes(secretCode)) &#123;</span><br><span class="line">    <span class="comment">//觸發效果</span></span><br><span class="line">    cornify_add();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//在畫面中顯示輸入內容</span></span><br><span class="line">  <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.inputCode&#x27;</span>).innerHTML = pressed.join(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="JavaScript語法-amp-備註"><a href="#JavaScript語法-amp-備註" class="headerlink" title="JavaScript語法&amp;備註"></a><strong>JavaScript語法&amp;備註</strong></h2><h3 id="Array-prototype-splice"><a href="#Array-prototype-splice" class="headerlink" title="Array.prototype.splice()"></a><strong>Array.prototype.splice()</strong></h3><p><code>splice(start, deleteCount, item1, item2, ...)</code>可以對陣列內容過行刪除或新增<br>第一個參數<code>start</code>為開始位置，若為負值則會返著數（由陣列尾部開始數），<br>第二個參數<code>deleteCount</code>為移除數量，若為0則不移除、若為負值則沒反應，<br>第三個參數<code>item1..</code>開始的為加入元素，可從第一個參數位置開始塞陣列元素。<br>例如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">arr.splice(<span class="number">0</span>, <span class="number">1</span>);  <span class="comment">//代表從位置0開始刪除1個元素，arr變成[2,3]</span></span><br><span class="line">arr.splice(-<span class="number">1</span>, <span class="number">1</span>); <span class="comment">//代表從陣列尾巴第一個開始刪除1個元素，arr變成[1,2]</span></span><br><span class="line">arr.splice(<span class="number">0</span>, -<span class="number">1</span>); <span class="comment">//第二個參數不接受複數，arr不變</span></span><br><span class="line">arr.splice(<span class="number">0</span>, <span class="number">1</span>, <span class="string">&#x27;4&#x27;</span>) <span class="comment">//從位置0刪除1個元素，並從位置0塞入&#x27;4&#x27;，arr變成[&#x27;4&#x27;,2,3]</span></span><br></pre></td></tr></table></figure>
+<p>所以回到練習中的這段code，就會了解為何這樣可以維持陣列長度並堆疊替換第一個元素  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pressed = []; </span><br><span class="line"><span class="keyword">const</span> secretCode = <span class="string">&#x27;guahsu&#x27;</span></span><br><span class="line">pressed.push(e.key);</span><br><span class="line">pressed.splice(-secretCode.length - <span class="number">1</span>, pressed.length - secretCode.length);</span><br></pre></td></tr></table></figure>
+<p>以此範例來說，第一個參數始終會是-7，第二個參數會是當前輸入陣列長度-6，<br>所以當事件觸發到第七個陣列值（第七個輸入被觸發且<code>push</code>進pressed時），<br>例如<code>[1,2,3,4,5,6,7]</code>時會變成<code>pressed.splice(-7,1)</code>，<br>等於刪除倒數第七個元素（也就是index0第一筆），<br>並透過陣列長度-設定密碼長度來決定刪除數量，使其維持在固定長度，<br>之後每次的<code>push</code>會加在尾段，而<code>splice</code>會刪除第一個元素。</p>
+<blockquote>
+<p>其實有卡住一點點，<br>因為作者寫的第一個參數用<code>-secretCode.length - 1</code>，<br>我一直搞不清楚跟用0有什麼差別囧  </p>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice">MDN-Array.prototype.splice()</a></p>
+</blockquote>
+<h3 id="Array-prototype-join"><a href="#Array-prototype-join" class="headerlink" title="Array.prototype.join()"></a><strong>Array.prototype.join()</strong></h3><p>用<code>join()</code>可以把陣列轉為字串，並透過參數設定連接符號。<br>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">arr.join(<span class="string">&#x27;&#x27;</span>); <span class="comment">// &#x27;123&#x27;</span></span><br><span class="line">arr.join(<span class="string">&#x27;@@&#x27;</span>); <span class="comment">// &#x27;1@@2@@3&#x27;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join">Array.prototype.join()</a></p>
+</blockquote>
+<h3 id="Array-prototype-includes"><a href="#Array-prototype-includes" class="headerlink" title="Array.prototype.includes()"></a><strong>Array.prototype.includes()</strong></h3><p>在string跟array都有<code>includes()</code>可以使用，<br>都是去判斷string/array是否包含incudes設定的參數後回傳<code>true/false</code><br>在這個練習中，因為使用<code>pressed.join(&#39;&#39;).includes(secretCode)</code>;<br>依據處理優先序在<code>pressed.join()</code>時已經被轉字串了，所以這裡的<code>incudes()</code>是屬於string的。</p>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes">Array.prototype.includes()</a></p>
+</blockquote>
+<h2 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h2><p>這次雖然只是小小的效果，在寫心得的時候真的也是學到很多以前沒注意的東西，<br>並在寫<code>includes()</code>才也知道string也有這個效果，以往我都只會使用<code>match()</code>，<br><code>includes()</code>屬於ES6的語法，爬文後整理到關於字串比對的使用還有以下各種方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;abcde&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> check1 = <span class="string">&#x27;ab&#x27;</span>; <span class="comment">//包含ab，期待值是true</span></span><br><span class="line"><span class="keyword">var</span> check2 = <span class="string">&#x27;ac&#x27;</span>; <span class="comment">//包含ac，期待值是false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//用includes()來取得true/false</span></span><br><span class="line">str.includes(check1); <span class="comment">//true</span></span><br><span class="line">str.includes(check2); <span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//用match()來處理，判斷是否為null來取得true/false</span></span><br><span class="line">str.match(check1); <span class="comment">// object</span></span><br><span class="line">str.match(check2); <span class="comment">// null</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//用indexOf()來處理，判斷是否為-1來取得true/false</span></span><br><span class="line">str.indexOf(check1); <span class="comment">// 0</span></span><br><span class="line">str.indexOf(check2); <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//用search()，判斷是否為-1來取得true/false</span></span><br><span class="line">str.search(check1); <span class="comment">// 0</span></span><br><span class="line">str.search(check2); <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//用RegExp正規表示式來取得true/false</span></span><br><span class="line"><span class="keyword">var</span> reg1 = <span class="regexp">/ab/</span>;</span><br><span class="line"><span class="keyword">var</span> reg2 = <span class="regexp">/ac/</span>;</span><br><span class="line">reg1.test(str); <span class="comment">// true</span></span><br><span class="line">reg2.test(str); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 用shift()來做slice</span></span><br><span class="line">input.shift()</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/BobChochola/javascript30/12_Java_script_Key_Sequence_Detection/index-BobChochola.html">[DEMO]</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-Custom-Video-Player-11/" rel="prev" title="JavaScript30-Custom-Video-Player-11">
+      <i class="fa fa-chevron-left"></i> JavaScript30-Custom-Video-Player-11
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/23/JavaScript30-Slide-in-on-Scroll-13/" rel="next" title="JavaScript30-Slide-in-on-Scroll-13">
+      JavaScript30-Slide-in-on-Scroll-13 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#12-Key-Sequence-Detection"><span class="nav-number">1.</span> <span class="nav-text">12 - Key Sequence Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-%E8%A8%AD%E5%AE%9A%E7%9B%AE%E6%A8%99"><span class="nav-number">1.2.1.</span> <span class="nav-text">Step1. 設定目標</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-%E5%9F%B7%E8%A1%8C"><span class="nav-number">1.2.2.</span> <span class="nav-text">Step2. 執行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F%E5%82%99%E8%A8%BB"><span class="nav-number">1.2.3.</span> <span class="nav-text">程式備註</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript%E8%AA%9E%E6%B3%95-amp-%E5%82%99%E8%A8%BB"><span class="nav-number">1.3.</span> <span class="nav-text">JavaScript語法&amp;備註</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-prototype-splice"><span class="nav-number">1.3.1.</span> <span class="nav-text">Array.prototype.splice()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-prototype-join"><span class="nav-number">1.3.2.</span> <span class="nav-text">Array.prototype.join()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-prototype-includes"><span class="nav-number">1.3.3.</span> <span class="nav-text">Array.prototype.includes()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2"><span class="nav-number">1.4.</span> <span class="nav-text">探索</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="Jj5k5zPnNaVV7LYlvIqUex4OlNQ-gyqpbb_MkVbz_Wo" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="01 - JavaScript Drum Kit一面上班, 一面學習自己從來不會的東西, 真的是一件很辛苦的事情QQ,從0開始, 從一開始的vscode要怎麼用, 到開始學習html,css, 到現在可以自己刻出畫面那個成就感真的很棒,連寫function語法都寫得不好 常常會syntax error,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript Drum Kit 01">
+<meta property="og:url" content="http://example.com/2021/03/04/JavaScript-Drum-Kit-01/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="01 - JavaScript Drum Kit一面上班, 一面學習自己從來不會的東西, 真的是一件很辛苦的事情QQ,從0開始, 從一開始的vscode要怎麼用, 到開始學習html,css, 到現在可以自己刻出畫面那個成就感真的很棒,連寫function語法都寫得不好 常常會syntax error,">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-04T09:32:28.000Z">
+<meta property="article:modified_time" content="2022-02-23T03:58:22.859Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/04/JavaScript-Drum-Kit-01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript Drum Kit 01 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/JavaScript-Drum-Kit-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript Drum Kit 01
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-04 17:32:28" itemprop="dateCreated datePublished" datetime="2021-03-04T17:32:28+08:00">2021-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-23 11:58:22" itemprop="dateModified" datetime="2022-02-23T11:58:22+08:00">2022-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="01-JavaScript-Drum-Kit"><a href="#01-JavaScript-Drum-Kit" class="headerlink" title="01 - JavaScript Drum Kit"></a><strong>01 - JavaScript Drum Kit</strong></h1><p>一面上班, 一面學習自己從來不會的東西, 真的是一件很辛苦的事情QQ,<br>從0開始, 從一開始的vscode要怎麼用, 到開始學習html,css, 到現在可以自己刻出畫面那個成就感真的很棒,<br>連寫function語法都寫得不好 常常會syntax error,</p>
+<span id="more"></span>
+<p>不知道function(e) 是什麼用途,不知道web developer tool 可以怎麼用,<br>forEach都寫不好, 不知道怎麼讓function可以執行 可以使用IIEF的方式,<br>這三個月真的過得很充實,<br>謝謝一路上幫助我的同事, 每天早上的stand up teach, 解決我前一天半夜遇到的問題,<br>幫我review提出更好的方法, 或是一些建議, 雖然對他們來說只是舉手之勞,<br>但耽誤大家的時間真的是一件很不好意思的事情,<br>中間第一次rebase, 多學了一些command <code>checkout .</code>, <code>commit --amand</code>, <code>aws 怎麼用</code>, <code>kill  procses</code>, <code>tail -f</code>,<br>雖然都是一些簡單的東西, 但當你嘗試去了解學習, 這些一開始覺得像天書的東西, 最後你也會成為別人眼中的大神, 不斷努力吧!!!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">試著讓團隊更好, 分享給不懂的人, 教學是一件很快樂事呢.</span><br><span class="line">第一次寫心得, 記錄自己都做了些什麼, 原來是一件令人開心的事情 而不枯燥, 像極了愛情.</span><br></pre></td></tr></table></figure>
+<p>鼓勵所有看到這個github的人, 只要堅持做自己想要做的事情, 慢慢的就會走向你想要的結果,</p>
+<p>堅持下去儘管最後想放棄了, 但中間的這些過程, 做往後也會是很好的養分,<br>至少你沒有畫地自限, 儘管最後失敗了, 也會比一開始沒有設目標的人爬得更高更成功.</p>
+<p>每天都會想到kobe bryant 你有看過凌晨4點的洛杉磯嗎 ?<br>  沒有, 但我每天都看到凌晨3:30的台北,隔天還是照常上下班, 照常發揮最大的產出, 照常維持運動習慣,要做最好的人.<br>  這些日子自己真的成長了不少, 雖然離合格還差得遠, 但是心態上.能力上.身為一個人類,都越來越好了.</p>
+<blockquote>
+<p>「我們每個人身上都蘊藏著巨大的潛能，但由於我們沒有進行有效的訓練，巨大的潛能只好沉睡在我們身上」。<br>我們總是忘了，其實自己可以做得更好、其實自己並沒有全力以赴，每個人身上都有無窮的潛能，只是你不知道罷了。</p>
+</blockquote>
+<p>好像開始有一點不一樣了呢…再加油吧！</p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a><strong>步驟</strong></h2><h4 id="Step1-新增keydown-listener"><a href="#Step1-新增keydown-listener" class="headerlink" title="Step1. 新增keydown listener"></a>Step1. 新增keydown listener</h4><p>利用<code>window.addEventListener(&#39;keydown&#39;, playSound);</code>來監聽鍵盤動作。  </p>
+<h4 id="Step2-建立functionplaySound"><a href="#Step2-建立functionplaySound" class="headerlink" title="Step2. 建立functionplaySound"></a>Step2. 建立function<code>playSound</code></h4><ol>
+<li>利用傳入的e.keyCode來取得對應的<code>audio</code>標籤及該按鍵的<code>div</code>標籤</li>
+<li>判斷傳入的e.keyCode是否有對應的<code>audio</code>標籤，若無則退出</li>
+<li>使對應的<code>div</code>加上<code>playing</code>樣式，產生對應的典及特效</li>
+<li>使對應的<code>audio</code>播放時間為0</li>
+<li>播放對應的音檔<h4 id="Step3-新增transitionend-listener"><a href="#Step3-新增transitionend-listener" class="headerlink" title="Step3. 新增transitionend listener"></a>Step3. 新增transitionend listener</h4></li>
+<li>偵測所有包含<code>className=&#39;key&#39;</code>的元件</li>
+<li>當該元件觸發特效並結束時(<code>transitionend</code>)，呼叫<code>removeTransition</code><h4 id="Step4-建立functionremoveTransition"><a href="#Step4-建立functionremoveTransition" class="headerlink" title="Step4.  建立functionremoveTransition"></a>Step4.  建立function<code>removeTransition</code></h4></li>
+<li>判斷傳入的propretyName是否為transform，若否則退出</li>
+<li>若為transform，則移除<code>playing</code>樣式</li>
+</ol>
+<h2 id="JavaScript語法-amp-備註"><a href="#JavaScript語法-amp-備註" class="headerlink" title="JavaScript語法&amp;備註"></a><strong>JavaScript語法&amp;備註</strong></h2><h3 id="element-classList："><a href="#element-classList：" class="headerlink" title="element.classList："></a><strong>element.classList</strong>：</h3><p>這個會回傳element的class值(陣列)，<br>範例用到了classList的方法<code>add()</code>及<code>remove()</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">classList.add(&#39;aaa&#39;, &#39;bbb&#39;, &#39;ccc&#39;); &#x2F;&#x2F;新增多個className</span><br><span class="line">classList.remove(&#39;aaa&#39;, &#39;bbb&#39;, &#39;ccc&#39;); &#x2F;&#x2F;移除多個className</span><br></pre></td></tr></table></figure>
+<p>如果已經存在/不存在的className則會被忽略。</p>
+<blockquote>
+<p>還有其他方法如:<br><code>toggle()</code>偵測是否存在這個className，存在則刪除/不存在則新增<br><code>contains()</code>偵測是否存在這個className, 返回true/false<br>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList">MDN-Element.classList</a></p>
+</blockquote>
+<h3 id="HTMLmediaElement-audio-："><a href="#HTMLmediaElement-audio-：" class="headerlink" title="**HTMLmediaElement(audio)**："></a>**HTMLmediaElement(audio)**：</h3><p>HTML的<code>audio</code>標籤，在HTML放置如下標籤指定音源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;audio src&#x3D;&quot;sound&#x2F;a.mp3&quot;&gt;&lt;&#x2F;audio&gt;</span><br></pre></td></tr></table></figure>
+<p>透過javascript來操作：<br><code>element.play()</code>:進行播放<br><code>element.currentTime</code>:指定播放秒數<br>範例中使用<code>currentTime</code>是為了達到連發的效果XD  </p>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement">MDN-HTMLMediaElement</a></p>
+</blockquote>
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a><strong>forEach</strong></h3><p>之前沒在javascript中使用的語法，用法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.forEach(callback <span class="function"><span class="keyword">function</span>)</span></span><br></pre></td></tr></table></figure>
+<p>我是用for迴圈來比對做語法理解的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> datas = [<span class="string">&#x27;data1&#x27;</span>, <span class="string">&#x27;data2&#x27;</span>, <span class="string">&#x27;data3&#x27;</span>];</span><br><span class="line"><span class="comment">//for迴圈寫法</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; datas.length; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(datas[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//forEach寫法</span></span><br><span class="line">datas.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//都會輸出</span></span><br><span class="line"><span class="comment">//data1</span></span><br><span class="line"><span class="comment">//data2</span></span><br><span class="line"><span class="comment">//data3</span></span><br><span class="line"></span><br><span class="line">datas.forEach(<span class="built_in">console</span>.log);</span><br><span class="line"><span class="comment">//如果透過上面直接console.log來看到結果是：</span></span><br><span class="line"><span class="comment">//data1 0 [&quot;data1&quot;, &quot;data2&quot;, &quot;data3&quot;]</span></span><br><span class="line"><span class="comment">//data2 1 [&quot;data1&quot;, &quot;data2&quot;, &quot;data3&quot;]</span></span><br><span class="line"><span class="comment">//data3 2 [&quot;data1&quot;, &quot;data2&quot;, &quot;data3&quot;]</span></span><br><span class="line"><span class="comment">//回傳的分別是value, index, array本身內容。</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach">MDN-Array.prototype.forEach()</a></p>
+</blockquote>
+<h3 id="箭頭函式-Arrow-Function"><a href="#箭頭函式-Arrow-Function" class="headerlink" title="箭頭函式(Arrow Function)"></a><strong>箭頭函式(Arrow Function)</strong></h3><p>ES6的新語法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//傳統寫法</span></span><br><span class="line"><span class="keyword">let</span> func1 = <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">&#x27;Hi, &#x27;</span> + arg); &#125;;</span><br><span class="line"><span class="comment">//箭頭函式寫法</span></span><br><span class="line"><span class="keyword">let</span> func2 = <span class="function"><span class="params">arg</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hi, &#x27;</span> + arg);</span><br><span class="line"><span class="comment">//補充:如果該function沒有參數要傳，要帶空括號如下</span></span><br><span class="line"><span class="keyword">let</span> func3 = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Hi&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN-Arrow functions</a></p>
+</blockquote>
+<h3 id="addEventListener"><a href="#addEventListener" class="headerlink" title="addEventListener"></a><strong>addEventListener</strong></h3><p>因為我是是第一次看到<code>transtionend</code>這個event，<br>所以去MDN查了HTML DOM event記錄連結在此</p>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/Events">MDN-Event reference</a></p>
+</blockquote>
+<h3 id="template-literals"><a href="#template-literals" class="headerlink" title="template literals"></a><strong>template literals</strong></h3><p>模板文字，同樣屬於第一次看到的東西，<br>利用<code>`</code> - 反引號(back-tick)或稱重音符(grave accent)來組合字串，<br>在範圍內可利用<code>$&#123;&#125;</code>加上變數操作</p>
+<p>例如原本的字串+變數組合寫法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;&lt;div data-key=&quot;&#x27;</span> + key + <span class="string">&#x27;&quot;&gt;&#x27;</span> +</span><br><span class="line">         <span class="string">&#x27;&lt;button&gt;click me&lt;/button&gt;&#x27;</span> +</span><br><span class="line">         <span class="string">&#x27;&lt;/div&gt;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>改用template string來做只要</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">`&lt;div data-key=&quot;<span class="subst">$&#123;key&#125;</span>&quot;&gt;</span></span><br><span class="line"><span class="string">         &lt;button&gt;click me&lt;/button&gt;</span></span><br><span class="line"><span class="string">         &lt;/div&gt;`</span>;</span><br></pre></td></tr></table></figure>
+<p>用<code>`</code>包住字串，利用<code>$&#123;&#125;</code>來包變數<br>這樣可以很輕鬆的組出易於閱讀的組合字串！<br>不用像以前還要注意單雙引號與+的配合了~</p>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">MDN-Template literals</a></p>
+</blockquote>
+<h3 id="Array-from"><a href="#Array-from" class="headerlink" title="Array.from"></a><strong>Array.from</strong></h3><p>範例中有這段</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> keys = <span class="built_in">Array</span>.from(<span class="built_in">document</span>.querySelectorAll(<span class="string">&#x27;.key&#x27;</span>));</span><br></pre></td></tr></table></figure>
+<p>查詢了<code>Array.from</code>才知道這是一個將一個物件或是字串轉為陣列格式的語法，<br>但當時覺得為何要把陣列在轉成陣列?querySelectorAll不就是返回陣列嗎?<br>在查下去才發現querySelectorAll返回的是nodeList且<strong>nodeList跟Array是不同的!</strong><br>雖然都很像陣列，但nodeList並沒有array.prototype上的方法！<br>最簡單的例子是用array.push()去測試，會發現由querySelectAll得到的物件無法用.push()。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> testNodeList = <span class="built_in">document</span>.querySelectAll(<span class="string">&#x27;.key&#x27;</span>);</span><br><span class="line">testNodeList.push(<span class="string">&#x27;add&#x27;</span>); <span class="comment">// &lt;--非陣列會報錯TypeError: testNodeList.push is not a function</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> testArray = <span class="built_in">Array</span>.from(testNodeList);</span><br><span class="line">testArray.push(<span class="string">&#x27;add&#x27;</span>); <span class="comment">// &lt;-- 轉為陣列就可以了</span></span><br></pre></td></tr></table></figure>
+<p>至於在範例中轉型的原因，<br>我想應該是因為若無轉型為Array使用nodeList來forEach可能會導致某些瀏覽器版本錯誤。  </p>
+<blockquote>
+<p>nodeList由querySelectorAll及childNodes返回的<br>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/NodeList">MDN-NodeList</a></p>
+</blockquote>
+<h2 id="CSS語法-amp-備註"><a href="#CSS語法-amp-備註" class="headerlink" title="CSS語法&amp;備註"></a><strong>CSS語法&amp;備註</strong></h2><h3 id="display-flex"><a href="#display-flex" class="headerlink" title="display:flex"></a><strong>display:flex</strong></h3><p>CSS3的排版語法，以範例中的來做備註紀錄</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.keys</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex; <span class="comment">/*要使用flex要在元素內先宣告flex*/</span></span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>; <span class="comment">/*這是一個簡寫，全部為flex: flex-grow｜flex-shrink｜flex-basis*/</span></span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">100vh</span>; <span class="comment">/*vh代表view height, 百分比呈現*/</span></span><br><span class="line">    <span class="attribute">align-items</span>: center; <span class="comment">/*宣告為flex後才有效的屬性，垂直置中*/</span></span><br><span class="line">    <span class="attribute">justify-content</span>: center;<span class="comment">/*宣告為flex後才有效的屬性，水平置中*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>參閱：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex">MDN-flex</a></p>
+</blockquote>
+<h2 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h2><p>原範例只能由鍵盤觸發，<br>我的探索是為這個範例加上可由滑鼠點擊觸發的功能</p>
+<pre><code class="javascript">const keys = Array.from(document.querySelectorAll(&#39;.key&#39;));
+
+//新增click功能綁定至每個class=&quot;key&quot;
+keys.forEach(key =&gt; key.addEventListener(&#39;click&#39;, playSound));
+
+function playSound(e) &#123;
+    //依據不同的事件來取得對應的key_code(e.type可以看，以下是簡寫版)
+    let keyCode = e.keyCode || this.getAttribute(&#39;data-key&#39;);
+
+    const audio = document.querySelector(`audio[data-key=&quot;$&#123;keyCode&#125;&quot;]`);
+    const key = document.querySelector(`div[data-key=&quot;$&#123;keyCode&#125;&quot;]`);
+
+    if (!audio) return;
+
+    key.classList.add(&#39;playing&#39;);
+    audio.currentTime = 0;
+    audio.play();
+&#125;
+
+[[DEMO]](https://bobchochola.github.io/javascript30/01_Java-Script-Drum-Kit/index-BobChochola.html)
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/13/JavaScript-CSS-with-Js-Clock-02/" rel="next" title="JavaScript-CSS-with-Js-Clock-02">
+      JavaScript-CSS-with-Js-Clock-02 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#01-JavaScript-Drum-Kit"><span class="nav-number">1.</span> <span class="nav-text">01 - JavaScript Drum Kit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.1.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Step1-%E6%96%B0%E5%A2%9Ekeydown-listener"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Step1. 新增keydown listener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step2-%E5%BB%BA%E7%AB%8BfunctionplaySound"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Step2. 建立functionplaySound</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step3-%E6%96%B0%E5%A2%9Etransitionend-listener"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">Step3. 新增transitionend listener</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step4-%E5%BB%BA%E7%AB%8BfunctionremoveTransition"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">Step4.  建立functionremoveTransition</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript%E8%AA%9E%E6%B3%95-amp-%E5%82%99%E8%A8%BB"><span class="nav-number">1.2.</span> <span class="nav-text">JavaScript語法&amp;備註</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#element-classList%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">element.classList：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTMLmediaElement-audio-%EF%BC%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">**HTMLmediaElement(audio)**：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#forEach"><span class="nav-number">1.2.3.</span> <span class="nav-text">forEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%AD%E9%A0%AD%E5%87%BD%E5%BC%8F-Arrow-Function"><span class="nav-number">1.2.4.</span> <span class="nav-text">箭頭函式(Arrow Function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#addEventListener"><span class="nav-number">1.2.5.</span> <span class="nav-text">addEventListener</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#template-literals"><span class="nav-number">1.2.6.</span> <span class="nav-text">template literals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-from"><span class="nav-number">1.2.7.</span> <span class="nav-text">Array.from</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E8%AA%9E%E6%B3%95-amp-%E5%82%99%E8%A8%BB"><span class="nav-number">1.3.</span> <span class="nav-text">CSS語法&amp;備註</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#display-flex"><span class="nav-number">1.3.1.</span> <span class="nav-text">display:flex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2"><span class="nav-number">1.4.</span> <span class="nav-text">探索</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

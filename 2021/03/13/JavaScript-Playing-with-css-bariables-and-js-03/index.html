@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="Jj5k5zPnNaVV7LYlvIqUex4OlNQ-gyqpbb_MkVbz_Wo" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="其實這次的東西很早就寫好了，只是最近真的是瘋狂的加班唉呀呀所以都沒有時間來寫寫自己多心得，分享一下自己過得還好嗎每天都寫要做這件事，可是每天都覺得今天好累啊，撐不住了，想滑手機、想耍廢…  我覺得我們都常常陷入這種情境之中，明明心有餘而力不足，這種狀況很常發生在一件事堅持了一段時間，就會覺得自己做事情已經比以前快上了許多，應該可以偷懶一下了吧我就常常有這種心情出現，總覺得說唉我都這麼努力了，還想要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript-Playing-with-css-bariables-and-js-03">
+<meta property="og:url" content="http://example.com/2021/03/13/JavaScript-Playing-with-css-bariables-and-js-03/index.html">
+<meta property="og:site_name" content="BobChochola&#39;s Note">
+<meta property="og:description" content="其實這次的東西很早就寫好了，只是最近真的是瘋狂的加班唉呀呀所以都沒有時間來寫寫自己多心得，分享一下自己過得還好嗎每天都寫要做這件事，可是每天都覺得今天好累啊，撐不住了，想滑手機、想耍廢…  我覺得我們都常常陷入這種情境之中，明明心有餘而力不足，這種狀況很常發生在一件事堅持了一段時間，就會覺得自己做事情已經比以前快上了許多，應該可以偷懶一下了吧我就常常有這種心情出現，總覺得說唉我都這麼努力了，還想要">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-03-13T07:36:24.000Z">
+<meta property="article:modified_time" content="2022-02-23T03:58:22.860Z">
+<meta property="article:author" content="Bob Chen">
+<meta property="article:tag" content="JavaScript30">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/13/JavaScript-Playing-with-css-bariables-and-js-03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>JavaScript-Playing-with-css-bariables-and-js-03 | BobChochola's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BobChochola's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">紀錄... 每一個自己開心的瞬間</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/JavaScript-Playing-with-css-bariables-and-js-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+      <meta itemprop="name" content="Bob Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BobChochola's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript-Playing-with-css-bariables-and-js-03
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-13 15:36:24" itemprop="dateCreated datePublished" datetime="2021-03-13T15:36:24+08:00">2021-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-23 11:58:22" itemprop="dateModified" datetime="2022-02-23T11:58:22+08:00">2022-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>其實這次的東西很早就寫好了，只是最近真的是瘋狂的加班唉呀呀<br>所以都沒有時間來寫寫自己多心得，分享一下自己過得還好嗎<br>每天都寫要做這件事，可是每天都覺得今天好累啊，撐不住了，想滑手機、想耍廢…</p>
+<blockquote>
+<p>我覺得我們都常常陷入這種情境之中，明明心有餘而力不足，這種狀況很常發生在一件事堅持了一段時間，就會覺得自己做事情已經比以前快上了許多，應該可以偷懶一下了吧<br>我就常常有這種心情出現，總覺得說<br>唉我都這麼努力了，還想要我怎樣呢？ 休息一下應該還好吧<br>休息是為了走更長遠的了…     但實際上真的是嗎？</p>
+</blockquote>
+<span id="more"></span>
+<p>休息不是永無止盡的放縱自己，而努力也不是埋首苦幹的往前衝<br>所以這次我給自己訂了一個時間，<br>從<code>開始製作</code>, <code>補上知識</code>, <code>嘗試不同的作法</code>, <code>寫好心得</code>, 都給自己一個時間<br>很意外的這次製作花了我很少的時間，<br>反而是補上知識的部分，花了我兩個晚上的時間，<br>雖然之前知道label這個東西，但不知道他其實有這麼多種呈現的方式，<br>所以就趁著自己<code>製作時間的上進步</code>, 讓自己更充實一點，<br>把每一種都試了一遍，順便去看看其他大神都會怎麼用，</p>
+<blockquote>
+<p>發狂接收訊息後，存在腦中的到底有多少呢？<br>其實大多數東西，沒有在用到應該就不會再記得他了，<br>國小跟你很要好的朋友名字，火山矽肺病的英文，曾經瘋狂出現在生命中的東西，有一天你也會慢慢淡忘他。<br>但是一但回一起，那熟悉感又會湧上的。<br>所以為了讓自己加深印象，所以花了特別多得時間來讓自己更融會貫通。<br>畢竟你不會忘記，8477294*174916592怎麼算吧，你只會覺得數學老師又再折磨人了，<br>但沒關係啊，現在有計算機，別人問你怎麼算出來的，可以跟他說讓他去算他一樣會覺得你很棒棒。<br>當我們懂的知道原理，使用起工具就會更加得心應手。</p>
+</blockquote>
+<p>什麼都準備好之後，一直在在想這次我學到了什麼，其實大概都已經想到了，</p>
+<blockquote>
+<p>一天拖著一天，想著隔天再來，啊今天好天氣去打打球好了，唉..今天天空不美麗放自己一個假，今天股市大跌要好好睡覺慰藉那些賠錢的人，今天旁邊的女同事說我很笨，今天主管又罵了我一頓，常常因為一些不知所云的理由，或是真的不開心的事情就想要讓自己放個假，讓自己放鬆快樂點，但實際上隔天早上起床，還是會有一堆鳥事成為你的藉口。</p>
+</blockquote>
+<p>給自己一個時間吧<br>如果你能在時間內又完成了，那我們是不是又比其他人更好了一些，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">曾經有一位大神同事跟我說過：</span><br><span class="line">你不進步你就等著被淘汰吧，</span><br><span class="line">但老一輩的人，怎麼好像都好好的過日子，</span><br><span class="line">一樣每天的例行公事，一樣對面一些鳥事，</span><br><span class="line">習慣成自然，也好好的到退休，</span><br><span class="line">但慢慢的想長大想著，</span><br><span class="line">其實他們都是群幸運的人吧。</span><br><span class="line">運氣不能掌握在自己手裡，</span><br><span class="line">但進步一定可以的吧，</span><br></pre></td></tr></table></figure>
+<p>覺得之前makrdown寫出來的樣式都很醜，push完之後又後悔，那為什麼不在一開始就幫自己先檢查檢查，<br>所以這次特別去看看別人都怎麼寫markdownk, markdown的一些小語法應該長什麼樣子，雖然還是很醜，<br>但我們都有在前進的。</p>
+<h1 id="03-CSS-Variables"><a href="#03-CSS-Variables" class="headerlink" title="03 - CSS Variables"></a><strong>03 - CSS Variables</strong></h1><blockquote>
+<p>首次上傳：2020/08/27  </p>
+</blockquote>
+<h2 id="主題"><a href="#主題" class="headerlink" title="主題"></a><strong>主題</strong></h2><p>用JS與CSS搭配製作一個即時的濾淨效果，<br>特效為調整內距、模糊、邊框色。  </p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a><strong>步驟</strong></h2><h4 id="Step1"><a href="#Step1" class="headerlink" title="Step1"></a>Step1</h4><p>利用CSS variable來定義CSS的變數(有點像sass的感覺)</p>
+<h4 id="Step2"><a href="#Step2" class="headerlink" title="Step2"></a>Step2</h4><p>利用addEventLinstener來綁HTML的控制桿，<br>並更新值到CSS變數中來達到即時調整的效果。</p>
+<h2 id="Javascript語法-amp-備註"><a href="#Javascript語法-amp-備註" class="headerlink" title="Javascript語法&amp;備註"></a><strong>Javascript語法&amp;備註</strong></h2><h3 id="dataset"><a href="#dataset" class="headerlink" title="dataset"></a><strong>dataset</strong></h3><p>用<code>dataset</code>可以取出對象的<code>data-*</code>屬性，也等同於<code>getAttribute</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;test&quot;</span> data-no=<span class="string">&quot;123&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">&#x27;#test&#x27;</span>).dataset.no <span class="comment">// 輸出123</span></span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">&#x27;#test &#x27;</span>).getAttribute(<span class="string">&#x27;data-no&#x27;</span>); <span class="comment">// 輸出123</span></span><br></pre></td></tr></table></figure>
+<h3 id="style-setProperty"><a href="#style-setProperty" class="headerlink" title="style.setProperty()"></a><strong>style.setProperty()</strong></h3><p>等同於style.cssPropertyName</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">style.setProperty(<span class="string">&#x27;padding&#x27;</span>, <span class="string">&#x27;15px&#x27;</span>);</span><br><span class="line"><span class="comment">/* 等同於 */</span></span><br><span class="line">style.padding = <span class="string">&#x27;15px&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>但在實際應用中，前者的做法會很方便帶參數進去。</p>
+<blockquote>
+<p>參照:<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty">MDN-setProperty</a></p>
+</blockquote>
+<h2 id="CSS語法-amp-備註"><a href="#CSS語法-amp-備註" class="headerlink" title="CSS語法&amp;備註"></a><strong>CSS語法&amp;備註</strong></h2><h3 id="filter-blur"><a href="#filter-blur" class="headerlink" title="filter:blur()"></a><strong>filter:blur()</strong></h3><p>CSS3的濾鏡功能，blur是高斯模糊，參數越高越模糊。</p>
+<blockquote>
+<p>參照:<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter">MDN-filter</a></p>
+</blockquote>
+<h2 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h2><p>依樣畫葫蘆的新增了<code>grayscale()</code>的效果，<br>在CSS中要使用兩個以上的濾鏡效果寫再一起就好，<br>如果分開來的話會變成覆蓋：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 這樣會變成覆蓋，剩下garyscale的效果 */</span></span><br><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="attribute">filter</span>: <span class="built_in">blur</span>(<span class="number">10px</span>);</span><br><span class="line">    <span class="attribute">filter</span>: <span class="built_in">grayscale</span>(<span class="number">10%</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 寫在同一處，才能吃到兩個效果 */</span></span><br><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="attribute">filter</span>: <span class="built_in">blur</span>(<span class="number">10px</span>) <span class="built_in">grayscale</span>(<span class="number">10%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="偽類的選取器"><a href="#偽類的選取器" class="headerlink" title="偽類的選取器"></a>偽類的選取器</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.querySelector(:root) === <span class="built_in">document</span>.querySelector(<span class="string">&#x27;html&#x27;</span>)</span><br><span class="line"><span class="built_in">document</span>.querySelector(:root) === <span class="built_in">document</span>.queryElement()</span><br></pre></td></tr></table></figure>
+
+<h2 id="關於-label-html"><a href="#關於-label-html" class="headerlink" title="關於 label html"></a>關於 label html</h2><p>遇到了就來查查資料吧<br>之前在jquery 有用過checkbox (‘checked’) 做出checkbox的標誌<br>這次來好好看看如何用label 建立出常見的UI</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span> :   <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;scales&quot;</span> <span class="attr">name</span>=<span class="string">&quot;scales&quot;</span><span class="attr">checked</span>&gt;</span> //圓圓的複選框 讓他可以check-&gt;checked 使用allClass(&#x27;ed&#x27;) removeClass(&#x27;ed&#x27;) 做變化</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;color&quot;</span>&gt;</span> : <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;color&quot;</span> <span class="attr">id</span>=<span class="string">&quot;head&quot;</span> <span class="attr">name</span>=<span class="string">&quot;head&quot;</span><span class="attr">value</span>=<span class="string">&quot;#e66465&quot;</span>&gt;</span> //會出現色塊 可以用value控制</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;date&quot;</span>&gt;</span> :</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;date&quot;</span> <span class="attr">id</span>=<span class="string">&quot;start&quot;</span> <span class="attr">name</span>=<span class="string">&quot;trip-start&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">value</span>=<span class="string">&quot;2018-07-22&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;2018-01-01&quot;</span> <span class="attr">max</span>=<span class="string">&quot;2018-12-31&quot;</span>&gt;</span></span><br><span class="line">//value 可以設定變數 const nowDate = new Date(); value=nowDate min, max 分別是最前面的日期與最後的日期</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;datetime-local&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;datetime-local&quot;</span> <span class="attr">id</span>=<span class="string">&quot;meeting-time&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">name</span>=<span class="string">&quot;meeting-time&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2018-06-12T19:30&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;2018-06-07T00:00&quot;</span> <span class="attr">max</span>=<span class="string">&quot;2018-06-14T00:00&quot;</span>&gt;</span></span><br><span class="line">//與 type=&quot;date&quot; 相似只是更多了時間</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;email&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;email&quot;</span> <span class="attr">id</span>=<span class="string">&quot;email&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">pattern</span>=<span class="string">&quot;.+@globex.com&quot;</span> <span class="attr">size</span>=<span class="string">&quot;30&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">//可以拿來驗證mail  使用pattern來控制</span><br><span class="line">//EX: pattern=&quot;[A-Za-z]&#123;3&#125;&quot; 只能輸入A-Z, a-z三位元 若超過的話 就會出現title內容&quot;Three letter counyry code&quot;</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;country_code&quot;</span> <span class="attr">name</span>=<span class="string">&quot;country_code&quot;</span> <span class="attr">pattern</span>=<span class="string">&quot;[A-Za-z]&#123;3&#125;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Three letter country code&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">id</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">name</span>=<span class="string">&quot;avatar&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">accept</span>=<span class="string">&quot;image/png, image/jpeg&quot;</span>&gt;</span></span><br><span class="line">//import file accept可以接受的副檔名 </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;month&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;bdaymonth&quot;</span>&gt;</span>Birthday (month and year):<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;month&quot;</span> <span class="attr">id</span>=<span class="string">&quot;bdaymonth&quot;</span> <span class="attr">name</span>=<span class="string">&quot;bdaymonth&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">//與date相似 但選取的範圍只有到month</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;number&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;tentacles&quot;</span>&gt;</span>Number of tentacles (10-100):<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;number&quot;</span> <span class="attr">id</span>=<span class="string">&quot;tentacles&quot;</span> <span class="attr">name</span>=<span class="string">&quot;tentacles&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;10&quot;</span> <span class="attr">max</span>=<span class="string">&quot;100&quot;</span>&gt;</span></span><br><span class="line">//看到這裡應該可以發現 min, max都是拿來設定最低限度與最高上限, UI上就只是一個div</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>Username:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;pass&quot;</span>&gt;</span>Password (8 characters minimum):<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">id</span>=<span class="string">&quot;pass&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span></span></span><br><span class="line"><span class="tag">           <span class="attr">minlength</span>=<span class="string">&quot;8&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">//登入畫面組合包minlength至少要多長, maxlength最多多長, 可以去思考一下為什麼不用min, max來表示</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">id</span>=<span class="string">&quot;huey&quot;</span> <span class="attr">name</span>=<span class="string">&quot;drone&quot;</span> <span class="attr">value</span>=<span class="string">&quot;huey&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">checked</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;huey&quot;</span>&gt;</span>Huey<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">id</span>=<span class="string">&quot;dewey&quot;</span> <span class="attr">name</span>=<span class="string">&quot;drone&quot;</span> <span class="attr">value</span>=<span class="string">&quot;dewey&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;dewey&quot;</span>&gt;</span>Dewey<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">//在radio只能單選, 若想要複選的話要使用checkbox</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;range&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;range&quot;</span> <span class="attr">id</span>=<span class="string">&quot;volume&quot;</span> <span class="attr">name</span>=<span class="string">&quot;volume&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">min</span>=<span class="string">&quot;0&quot;</span> <span class="attr">max</span>=<span class="string">&quot;11&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;volume&quot;</span>&gt;</span>Volume<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;range&quot;</span> <span class="attr">id</span>=<span class="string">&quot;cowbell&quot;</span> <span class="attr">name</span>=<span class="string">&quot;cowbell&quot;</span> </span></span><br><span class="line"><span class="tag">         <span class="attr">min</span>=<span class="string">&quot;0&quot;</span> <span class="attr">max</span>=<span class="string">&quot;100&quot;</span> <span class="attr">value</span>=<span class="string">&quot;90&quot;</span> <span class="attr">step</span>=<span class="string">&quot;10&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;cowbell&quot;</span>&gt;</span>Cowbell<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">//這裡的min, max則是指range的刻度, 越多就可以分得越細 value,step 可以自己去玩玩看哦</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;search&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;site-search&quot;</span>&gt;</span>Search the site:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;search&quot;</span> <span class="attr">id</span>=<span class="string">&quot;site-search&quot;</span> <span class="attr">name</span>=<span class="string">&quot;q&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">aria-label</span>=<span class="string">&quot;Search through site content&quot;</span>&gt;</span></span><br><span class="line">//我想可以在這裡做一些filter的事件</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;tel&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;tel&quot;</span> <span class="attr">id</span>=<span class="string">&quot;phone&quot;</span> <span class="attr">name</span>=<span class="string">&quot;phone&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">pattern</span>=<span class="string">&quot;[0-9]&#123;3&#125;-[0-9]&#123;3&#125;-[0-9]&#123;4&#125;&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">required</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">small</span>&gt;</span>Format: 123-456-7890<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span><br><span class="line">//同email, 使用pattern來做控制</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line">// [https://reurl.cc/3LLQmL] 非常重要的一個tag</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;time&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;time&quot;</span> <span class="attr">id</span>=<span class="string">&quot;appt&quot;</span> <span class="attr">name</span>=<span class="string">&quot;appt&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;09:00&quot;</span> <span class="attr">max</span>=<span class="string">&quot;18:00&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">//同date, month 但變成只有時間可以選擇</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;url&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;url&quot;</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">id</span>=<span class="string">&quot;url&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">placeholder</span>=<span class="string">&quot;https://example.com&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">pattern</span>=<span class="string">&quot;https://.*&quot;</span> <span class="attr">size</span>=<span class="string">&quot;30&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">required</span>&gt;</span></span><br><span class="line">//輸入URL吧 pattern要是&#x27;https://.&#x27;開頭的喔 而且size不能超過30</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;week&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/action_page.php&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;week&quot;</span>&gt;</span>Select a week:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;week&quot;</span> <span class="attr">id</span>=<span class="string">&quot;week&quot;</span> <span class="attr">name</span>=<span class="string">&quot;week&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">//可以一次選擇一週的時間</span><br><span class="line"><span class="tag">&lt;<span class="name">meter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">progress</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">textarea</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">tel</span>&gt;</span>請輸入電話：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">tel</span> <span class="attr">type</span>=<span class="string">text</span> <span class="attr">name</span>=<span class="string">user_tel</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">label 的用法很簡單， 注意這個例子中的 label 開始標籤，</span><br><span class="line">它有一個「for」屬性： for&#x3D;tel</span><br><span class="line">然後再注意 input 標籤，</span><br><span class="line">它有一個「id」屬性：id&#x3D;tel</span><br><span class="line"></span><br><span class="line">for 和 id 這兩個屬性的設定值依樣。</span><br><span class="line">我們可以這樣子想：</span><br><span class="line">「label 的 for，要對應到 input 的 id」。</span><br><span class="line">因此，除了把要顯示的提示內容用 label 包住以外，label 標籤的 for 屬性設定成什麼，input 也要設定一個相同的 id 屬性。如此成雙成對，</span><br><span class="line">這樣子你的網頁使用者不管 tab 到哪個文字輸入欄，</span><br><span class="line">導盲鼠或其他螢幕閱讀器才都可以精確的唸出它的題是信息，</span><br><span class="line">讓使用者能夠輕鬆地了解每個文字方塊到底要輸入的是什麼。</span><br></pre></td></tr></table></figure>
+<h2 id="三元運算子-Ternary-operators-vs-if-else-statemanet"><a href="#三元運算子-Ternary-operators-vs-if-else-statemanet" class="headerlink" title="三元運算子 Ternary operators vs if-else statemanet"></a>三元運算子 Ternary operators vs if-else statemanet</h2><p>在範例裡我有試著用三運算子來做做看<br><code>使用條件</code>讓語句簡單一點 其實什麼狀況都是可以使用的<br>只是使用起來真的會更好閱讀嗎<br>而在這裡不考慮使用的原因是因為<br>html裡面有data-sizing 這個變數<br>讓我覺得可以有更好的閱讀方式也更容易控制</p>
+<p><a target="_blank" rel="noopener" href="https://bobchochola.github.io/javascript30/03_Java_script_Playing_with_CSS_Variables_and_JS/index-BobChochola.html">[DEMO]</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript30/" rel="tag"># JavaScript30</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/13/JavaScript-CSS-with-Js-Clock-02/" rel="prev" title="JavaScript-CSS-with-Js-Clock-02">
+      <i class="fa fa-chevron-left"></i> JavaScript-CSS-with-Js-Clock-02
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/13/JavaScript-Array-Cardio-Day1-04/" rel="next" title="JavaScript-Array-Cardio-Day1-04">
+      JavaScript-Array-Cardio-Day1-04 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#03-CSS-Variables"><span class="nav-number">1.</span> <span class="nav-text">03 - CSS Variables</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">主題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.2.</span> <span class="nav-text">步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Step1"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">Step1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Step2"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Step2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Javascript%E8%AA%9E%E6%B3%95-amp-%E5%82%99%E8%A8%BB"><span class="nav-number">1.3.</span> <span class="nav-text">Javascript語法&amp;備註</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dataset"><span class="nav-number">1.3.1.</span> <span class="nav-text">dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#style-setProperty"><span class="nav-number">1.3.2.</span> <span class="nav-text">style.setProperty()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E8%AA%9E%E6%B3%95-amp-%E5%82%99%E8%A8%BB"><span class="nav-number">1.4.</span> <span class="nav-text">CSS語法&amp;備註</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#filter-blur"><span class="nav-number">1.4.1.</span> <span class="nav-text">filter:blur()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2"><span class="nav-number">1.5.</span> <span class="nav-text">探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%BD%E9%A1%9E%E7%9A%84%E9%81%B8%E5%8F%96%E5%99%A8"><span class="nav-number">1.6.</span> <span class="nav-text">偽類的選取器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E6%96%BC-label-html"><span class="nav-number">1.7.</span> <span class="nav-text">關於 label html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%85%83%E9%81%8B%E7%AE%97%E5%AD%90-Ternary-operators-vs-if-else-statemanet"><span class="nav-number">1.8.</span> <span class="nav-text">三元運算子 Ternary operators vs if-else statemanet</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bob Chen"
+      src="https://github.com/BobChochola/github.io/blob/master/S__9068557.jpg?raw=true">
+  <p class="site-author-name" itemprop="name">Bob Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BobChochola" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BobChochola" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bob148666@gmail.com" title="E-Mail → mailto:bob148666@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100002481254624" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100002481254624" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bob Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
